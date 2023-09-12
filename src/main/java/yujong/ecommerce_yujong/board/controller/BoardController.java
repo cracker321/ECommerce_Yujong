@@ -53,14 +53,19 @@ import org.springframework.web.bind.annotation.RestController;
 //  반드시 있어야 한다!
 //  그렇기에, 이 때는 기본 생성자를 직접 작성해주거나(e.g: public Board(){} 또는 protected Board(){}),
 //  @NoArgsConstructor를 그 엔티티 클래스 위에 붙이면 된다!!
+//  - JPA에서 Entity 클래스 작성 시 반드시 지켜야 하는 규칙
+//    (1) 기본 생성자 필요
+//    (2) @Entity 어노테이션
+//    (3) ID 어노테이션: 엔티티의 기본키(primary key)를 나타냄. 각 엔티티 객체를 유일하게 식별하기 위해 필요함.
 
 
 //- @RequiredArgsConstructor는 final과 @NonNull만 붙은 필드를 선별하여(=Requirerd) 그 필요로 하게 되는 필드만(=Required)을
 //  매개변수로 하는 생성자를 만들어주는 것이므로,
 //  절대 @RequiredArgsConstructor가 '기본 생성자를 작성해주거나 @NoArgsConstructor를 포함하고 있지 않다'!!!
 
+
 //*****중요*****
-//cf) - 근데 컨트롤러 클래스에는 일반적으로 @AllArgsConstructor 나 @NoArgsConstructor를 사용하지 않음.
+//cf) - 컨트롤러 클래스에는 일반적으로 @AllArgsConstructor 나 @NoArgsConstructor를 사용하지 않음.
 //      왜냐하면, 컨트롤러 클래스는 웹 요청을 처리하는 역할만 수행하해야 하고, 따라서 컨트롤러가 여러가지 다른 Serivce, Repository를
 //      컨트롤러 클래스 내부에 private final MemberService memberSerive와 같이 의존성 주입받는 경우는 1개 또는 소수의 서비스만을
 //      필요로 하는 것이 대부분이다.
