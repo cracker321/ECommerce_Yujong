@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 //@RequiredArgsConstructor: //@RequiredArgsConsturctor 어노테이션을 사용하면,
                             //final로 선언된 필드나 @NonNull 어노테이션을 사용한 필드만을 필요로 하는 생성자를 만들어준다!
 
-//cf)
+//cf) '회원 엔티티 Member', '배송 엔티티 Delivery'와 같은 엔티티 객체들은 컨트롤러, 서비스, 레펏 등 여기저기에 다 걸쳐가며
+//    왔다갔다하며 사용되는 것이고, 따라서 이 엔티티 객체들은 의존성 주입의 대상이 아님!
+//    의존성 주입의 대상은 대부분 Service, Repository 이다!!
 public class BoardController {
+
+    //게시글 등록
 }
