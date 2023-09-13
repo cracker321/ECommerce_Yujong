@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yujong.ecommerce_yujong.board.entity.Board;
 
 @Data
 @NoArgsConstructor
@@ -36,5 +37,7 @@ public class Product {
     @Column
     private String mainImage; //확인하기!
 
+    @OneToOne(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private Board board;
 
 }

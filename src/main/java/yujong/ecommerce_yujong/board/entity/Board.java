@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Auditable;
 
-@Data
+@Data //그러나, 사실 엔티티에 '@Setter'를 넣어주는 것은 지양해야 함
 @NoArgsConstructor
 @Table(name="board")
 @Entity
