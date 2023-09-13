@@ -34,10 +34,16 @@ public class Product {
     @Column(nullable=false)
     private int category;
 
+    //확인하기!
     @Column
-    private String mainImage; //확인하기!
+    private String mainImage;
 
+    //< Board(1) - Product(1) 양방향 매핑. 주인 객체: Board >
     @OneToOne(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private Board board;
+
+    //< Board - Product 연관관계 편의 메소드 >
+
+
 
 }
