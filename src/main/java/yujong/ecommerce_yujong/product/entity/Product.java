@@ -370,16 +370,4 @@ public class Product {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -76,7 +76,7 @@ public class Customer {
         //    (=다른 고객 Customer 정보와 매핑되어 있는 상황이라면),
         //    (=내가 작성해서 외부에서 새롭게 들어온 회원 Member 정보가 이미 다른 고객 Customer를 참조하고 있는 상황이라면)
         //- 'member.setCustomer(this)'
-        //  : 그 다른 고객 Customer 정보를 자신이 입력한 회원 Member 정보에서 없애고 외부에서 새롭게 들어온
+        //  : 그 과거의 다른 고객 Customer 정보를 자신이 입력한 회원 Member 정보에서 없애고 외부에서 새롭게 들어온
         //    고객으로서의 자신 회원 Member 정보로 대체해야 하기 때문에, 그 방법으로
         //    자신이 입력한 회원 Member 정보가 기존의 다른 고객 Customer 정보와 매핑되어 있는 연관관계를 해제시키고,
         //    이제 외부에서 들어온 자신이 입력한 회원 Member 정보에 현재 특정된이 고객 Customer 정보를 집어넣어서,

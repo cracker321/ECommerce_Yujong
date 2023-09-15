@@ -73,7 +73,7 @@ public class Member {
 
 
     //*****중요*****
-    //< Member(1) : Comment(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
+    //< Member(1) : Comment(N). N:1 양방향 매핑. 연관관계 편의 메소드 > 교재 p190~
     //- 이 Member 클래스로 만든 어떤 회원 Member가 있는데, 그 회원 Member가 새로운 댓글 Comment를 남기는 경우,
     //  그 Member의 객체 정보에 그 Member가 새로운 댓글을 남겼다 라는 정보를 넣어야 하고,
     //  이 때 그 새롭게 남긴 댓글 정보를 아래 메소드 addComment를 외부 다른 클래스에서 사용하여
@@ -111,7 +111,6 @@ public class Member {
     //- set이 붙는 연관관계 편의 메소드는 기본적으로 Setter 세터와 형식이 같음!!
     public void setCustomer(Customer customer){
 
-
         // Step 1)
         //- 'this.customer != null'
         //  : 만약, 현재 특정된 회원 Member의 고객 Customer 정보가 비어져 있지 않은 상태(=깨끗하지 않은)이라면,
@@ -130,7 +129,7 @@ public class Member {
 
         // Step 2)
         //- 현재 특정된 회원 Member의 비어 있는 고객 Customer 정보 칸에, 이제 자신이 입력한
-        //  고객인 자신의 고객 정보 Customer 정보를 자신인 현재 특정된 회원 Member의 정보로 주입시켜서,
+        //  고객인 자신의 고객 Customer 정보를 자신인 현재 특정된 회원 Member의 정보로 주입시켜서,
         //  이제 이 회원 Member가 고객으로서의 자신만의 고객 Customer 정보를 갖도록 한다.
         this.customer = customer;
 
@@ -149,10 +148,10 @@ public class Member {
         //    (=다른 회원 Member 정보와 매핑되어 있는 상황이라면),
         //    (=내가 작성해서 외부에서 새롭게 들어온 고객 Customer 정보가 이미 다른 회원 Member를 참조하고 있는 상황이라면)
         //- 'customer.setMember(this)'
-        //  : 그 다른 회원 Member 정보를 자신이 입력한 고객 Customer 정보에서 없애고 외부에서 새롭게 들어온
+        //  : 그 과거의 다른 회원 Member 정보를 자신이 입력한 고객 Customer 정보에서 없애고 외부에서 새롭게 들어온
         //    고객으로서의 자신 고객 Customer 정보로 대체해야 하기 때문에, 그 방법으로
         //    자신이 입력한 고객 Customer 정보가 기존의 다른 회원 Member 정보와 매핑되어 있는 연관관계를 해제시키고,
-        //    이제 외부에서 들어온 자신이 입력한 고객 Customer 정보에 현재 특정된이 회원 Member 정보를 집어넣어서,
+        //    이제 외부에서 들어온 자신이 입력한 고객 Customer 정보에 현재 특정된 이 회원 Member 정보를 집어넣어서,
         //    이제 비로소 외부에서 들어온 자신이 입력한 고객 Customer 정보와
         //    현재 자기 자신인 회원 Member 를 매핑시키는 것임.
         if(customer != null && customer.getMember() != this){
@@ -201,7 +200,7 @@ public class Member {
 
         // Step 2)
         //- 현재 특정된 회원 Member의 비어 있는 판매자 Seller 정보 칸에, 이제 자신이 입력한
-        //  판매자인 자신의 판매자 정보인 Seller 정보를 주입시켜서,
+        //  판매자인 자신의 판매자 Seller 정보를 주입시켜서,
         //  이제 이 회원 Member가 판매자로서의 자신의 Seller 정보를 갖도록 한다.
         this.seller = seller;
 
@@ -220,10 +219,10 @@ public class Member {
         //    (=다른 회원 Member 정보와 매핑되어 있는 상황이라면),
         //    (=내가 작성해서 외부에서 새롭게 들어온 판매자 Seller 정보가 이미 다른 회원 Member를 참조하고 있는 상황이라면)
         //- 'seller.setMember(this)'
-        //  : 그 다른 회원 Member 정보를 자신이 입력한 판매자 Seller 정보에서 없애고 외부에서 새롭게 들어온
+        //  : 그 과거의 다른 회원 Member 정보를 자신이 입력한 판매자 Seller 정보에서 없애고 외부에서 새롭게 들어온
         //    고객으로서의 자신 판매자 Seller 정보로 대체해야 하기 때문에, 그 방법으로
         //    자신이 입력한 판매자 Seller 정보가 기존의 다른 회원 Member 정보와 매핑되어 있는 연관관계를 해제시키고,
-        //    이제 외부에서 들어온 자신이 입력한 판매자 Seller 정보에 현재 특정된이 회원 Member 정보를 집어넣어서,
+        //    이제 외부에서 들어온 자신이 입력한 판매자 Seller 정보에 현재 특정된 이 회원 Member 정보를 집어넣어서,
         //    이제 비로소 외부에서 들어온 자신이 입력한 판매자 Seller 정보와
         //    현재 자기 자신인 회원 Member 를 매핑시키는 것임.
         if(seller != null && seller.getMember() != this){

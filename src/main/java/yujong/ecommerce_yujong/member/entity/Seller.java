@@ -75,10 +75,10 @@ public class Seller {
         //    (=다른 판매자 Seller 정보와 매핑되어 있는 상황이라면),
         //    (=내가 작성해서 외부에서 새롭게 들어온 회원 Member 정보가 이미 다른 판매자 Seller를 참조하고 있는 상황이라면)
         //- 'member.setSeller(this)'
-        //  : 그 다른 판매자 Seller 정보를 자신이 입력한 회원 Member 정보에서 없애고 외부에서 새롭게 들어온
+        //  : 그 과거의 다른 판매자 Seller 정보를 자신이 입력한 회원 Member 정보에서 없애고 외부에서 새롭게 들어온
         //    고객으로서의 자신 회원 Member 정보로 대체해야 하기 때문에, 그 방법으로
         //    자신이 입력한 회원 Member 정보가 기존의 다른 판매자 Seller 정보와 매핑되어 있는 연관관계를 해제시키고,
-        //    이제 외부에서 들어온 자신이 입력한 회원 Member 정보에 현재 특정된이 판매자 Seller 정보를 집어넣어서,
+        //    이제 외부에서 들어온 자신이 입력한 회원 Member 정보에 현재 특정된 이 판매자 Seller 정보를 집어넣어서,
         //    이제 비로소 외부에서 들어온 자신이 입력한 회원 Member 정보와
         //    현재 자기 자신인 판매자 Seller 를 매핑시키는 것임.
         if(member.getSeller() != this){
@@ -96,10 +96,11 @@ public class Seller {
     private List<Board> boardList = new ArrayList<>();
 
 
-    //< Seller(1) : Board(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
+
+
 
     //*****중요*****
-    //< Seller(1) : Board(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
+    //< Seller(1) : Board(N). N:1 양방향 매핑. 연관관계 편의 메소드 > 교재 p190~
     //- 이 Seller 클래스로 만든 어떤 판매자 Seller가 있는데, 그 판매자 Seller가 새로운 게시글 Board를 남기는 경우,
     //  그 판매자 Seller의 객체 정보에 그 Seller가 새로운 게시글을 남겼다 라는 정보를 넣어야 하고,
     //  이 때 그 새롭게 남긴 게시글 정보를 아래 메소드 addBoard를 외부 다른 클래스에서 사용하여
