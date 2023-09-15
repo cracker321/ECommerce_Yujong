@@ -7,8 +7,11 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.board.entity.Board;
+import yujong.ecommerce_yujong.member.entity.Seller;
+import yujong.ecommerce_yujong.ord.entity.Ord;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -55,7 +58,8 @@ public class Product {
 
 
 
-    //< Board - Product 연관관계 편의 메소드 >
+    //< Board - Product 연관관계 편의 메소드 > //교재 p190~
+    //- set이 붙는 연관관계 편의 메소드는 기본적으로 Setter 세터와 형식이 같음!!
     public void setProduct(Board board){
 
         //- 아래보다, 김영한님 강의에 내가 필기한 것이 더 올바른 방법임.
@@ -89,7 +93,7 @@ public class Product {
         //- 외부 클래스 어딘가에서 이 메소드 setProduct를 새로운 인자값(=새로운 게시글 'Board board')으로 호출할 때,
         //  step1 에서 그 외부에서 들어온 새로운 Board 객체를 현재 Product 엔티티 객체의 필드 board의 값으로 받아들였고,
         //  이제 그 새롭게 받아들인 게시글 board가, 기존에 이미 어떤 다른 상품 Product 객체와 연결되어 있는 상태인지를 확인하는 것임.
-        //- board.getProduct() != this
+        //- 'board.getProduct() != this'
         //  : 만약, 새롭게 받아들인 게시글 board가 현재 Product 객체와 연결되어 있는 것이 아닌 기존에 어떤 다른 상품 Product 객체와
         //    연결되어 있는 상태라면,
         //- board.setProduct(this)
