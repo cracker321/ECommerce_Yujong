@@ -2,9 +2,12 @@ package yujong.ecommerce_yujong.member.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.ord.entity.Ord;
+import yujong.ecommerce_yujong.review.entity.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,7 @@ public class Customer {
 
 
     //< Customer(1) : Order(N). N:1 양방향 매핑. 주인객체: Ord 객체 >
-    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
     private List<Ord> ordList = new ArrayList<>();
 
 
@@ -63,6 +66,24 @@ public class Customer {
 
 
     //< Customer(1) : Review(N). N:1 양방향 매핑. 주인객체: Review >
+    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
+
+
+    //< Customer(1) : Review(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
+    public void addReview(Review review){
+        reviewList.add(review);
+
+        if(review.getCustomer() != this){
+            review.setCustomer(this);
+        }
+    }
+
+
+    @Builder
+    public Customer(Long customerId){
+        this.customerId = customerId;
+    }
 
 
 
