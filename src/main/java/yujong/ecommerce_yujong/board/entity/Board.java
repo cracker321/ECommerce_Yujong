@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.product.entity.Product;
+import yujong.ecommerce_yujong.review.entity.Review;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data //그러나, 사실 엔티티에 '@Setter'를 넣어주는 것은 지양해야 함
 @NoArgsConstructor
@@ -114,20 +118,35 @@ public class Board extends Auditable {
 
 
 
+    //< Review(N) : Board(1). N:1 양방향 매핑. 주인객체: Review >
 
-    //
-
-
-
-
+    @OneToMany(mappedBy="board", cascade=CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
 
 
+    //*****중요*****
+    //리뷰의 특성 상, 따로 그 Review와 Board 간 연관관계 메소드를 작성해줄 정도로
+    //리뷰의 속성에 넣어줄 그런 중요한 건 없기 때문에,
+    //Reivew와 Board 간 연관관계 메소드를 Board 객체의 정보 내부에 넣거나 그러지 않음.
+
+
+//=============================================================================================================
+
+
+
+    //< Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment >
+    @OneToMany(mappedBy="board")
+    private List<Comment> commentList = new ArrayList<>();
+
+
+
+//=============================================================================================================
 
 
 
 
 
-
+//=============================================================================================================
 
 
 
