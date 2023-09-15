@@ -69,14 +69,22 @@ public class Member {
     private List<Comment> commentList;
 
     //*****중요*****
-    //< Member(N)과 Comment(1) 연관관계 편의 메소드 >
+    //< Member(1) : Comment(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
+    //- 이 Member 클래스로 만든 어떤 회원 Member가 있는데, 그 회원 Member가 새로운 댓글 Comment를 남기는 경우,
+    //  그 Member의 객체 정보에 그 Member가 새로운 댓글을 남겼다 라는 정보를 넣어야 하고,
+    //  이 때 그 새롭게 남긴 댓글 정보를 아래 메소드 addComment를 외부 다른 클래스에서 사용하여
+    //  그 Member 객체 내부에 넣어주는 것임.
     public void addComment(Comment comment){
 
-        this.comment = comment;
+        commentList.add(comment); //그 Member가 기존에 작성했떤 과거 댓글 이력 리스트들에,
+                                  // 이제 이번에 새롭게 발생시킨 댓글 작성도 그 과거 댓글 이력 commentList에 추가해서 넣어줌.
 
         if(comment.getMember() != this){
             comment.setMember(this);
         }
+
+
+
     }
 
 

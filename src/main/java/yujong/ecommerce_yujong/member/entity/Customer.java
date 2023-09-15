@@ -53,7 +53,8 @@ public class Customer {
     //  그 Customer의 객체 정보에 그 Customer가 새로운 주문을 했다는 정보를 넣어야 하고,
     //  이 때 그 새로운 주문 정보를 아래 메소드 addOrd를 외부 다른 클래스에서 사용하여 그 Customer 객체 내부에 넣어주는 것임.
     public void addOrd(Ord ord){
-        ordList.add(ord); //그 Customer가 기존에 주문한 과거 주문 내역 리스트들에, 이제 이번에 새롭게 발생시킨 주문도 그 주문이력에 넣음.
+        ordList.add(ord); //그 Customer가 기존에 주문한 과거 주문 내역 리스트들에,
+                          // 이제 이번에 새롭게 발생시킨 주문도 그 과거 주문이력 ordList에 추가해서 넣어줌.
 
         if(ord.getCustomer() != this){
             ord.setCustomer(this);
