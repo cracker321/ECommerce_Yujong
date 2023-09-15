@@ -22,6 +22,9 @@ public class Member {
     private Long memberId;
 
     @Column(length=45, nullable=false)
+    private String name;
+
+    @Column(length=45, nullable=false)
     private String email;
 
     @Column(length=50, nullable=false)
@@ -90,7 +93,7 @@ public class Member {
     private Customer customer;
 
 
-    //< Member(1) : Customer(1). 1:1 양방향 매핑. 연관과계 편의 메소드 >
+    //< Member(1) : Customer(1). 1:1 양방향 매핑. 연관관계 편의 메소드 >
     public void setCustomer(Customer customer){
 
         this.customer=customer;
@@ -104,11 +107,42 @@ public class Member {
 
 
 
-    //여기 cascadeType 확실히 하기!!
+
+    //'먼저 발생하고, 먼저 일어나는 엔티티 객체의 클래스 내부에 cascadeType을 넣는 것이다!!'
+    //즉, 여기서는 Member 객체의 변화가 먼저 발생하고, 먼저 일어나기 때문에, 
+    //아래처럼 이 Member 엔티티 클래스 내부에 cascadeType을 작성했다!
+
+    //< Member(1) : Customer(1). 1:1 양방향 매핑. 주인객체: Seller 객체 >
     @OneToOne(mappedBy="member", cascade=CascadeType.ALL)
     private Seller seller;
 
 
 
+    //< Member(1) : Customer(1). 1:1 양방향 매핑. 연관관계 편의 메소드 >
+    //- 연관관계 편의 메소드는 기본적으로 Setter 세터와 형식이 같음!!
+    public void setSeller(Seller seller){
+        this.seller = seller;
+
+        if(seller.getMember() != this){
+            seller.setMember(this);
+        }
+    }
+
+
+
+
+    //사용자 생성자(Builder와는 별개로 만든 것임)
+    public Member(String name, String email, String password, ProviderType providerType, String role,
+                  List<String> roles, String socialId){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.providerType = providerType;
+        this.role = role;
+        this.roles = roles;
+        this. socialId = socialId;
+
+
+    }
 
 }

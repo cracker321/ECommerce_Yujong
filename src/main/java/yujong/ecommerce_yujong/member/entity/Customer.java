@@ -4,6 +4,10 @@ package yujong.ecommerce_yujong.member.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yujong.ecommerce_yujong.ord.entity.Ord;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -32,6 +36,15 @@ public class Customer {
             member.setCustomer(this);
         }
     }
+
+
+
+
+    //< Customer(1) : Order(N). N:1 양방향 매핑. 주인객체: Ord 객체 >
+    @OneToOne(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<Ord> ordList = new ArrayList<>();
+
+
 
 
 }
