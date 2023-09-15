@@ -30,9 +30,23 @@ public class Customer {
     private Member member;
 
 
-    //Customer <--> Member 연관관계 편의 메소드
+    //< Customer(1) : Member(1). 1:1 양방향 매핑. 연관관계 편의 메소드 >
     //기본적으로 Setter와 형식 같음
     public void setMember(Member member){
+
+
+        // Step 1)
+        //- 만약, 현재 특정된 고객 Customer의 회원 Member 정보가 비어져 있지 않은 상태(=깨끗하지 않은)이고,
+        //  이 현재 고객 Customer이 과거에 이미 회원가입을 했었다든지 어떤 경로 통해서였든지
+        //  이 현재 고객 Customer이 이 쇼핑몰에서 기존에 자신의 Member 정보를 가지고 있는 상태였다면,
+        //  현재 특정된 고객 Customer의 기존 Member 정보를 지워버린다.
+        //  즉, 현재 특정된 고객 Customer가 가지고 있었던 기존 Member 정보를
+        //  현재 특정된 고객 Customer에서 떼어내어 제거시키는 것임.
+        if(this.member != null){
+            this.member.setCustomer(null);
+        }
+
+        
         this.member = member;
 
         if(member.getCustomer() != this){
