@@ -14,6 +14,15 @@ public class Review extends Auditable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @Column
+    @Column(nullable=false)
+    private String context;
+
+//    @Column
+//    private String image;
+
+    @Column(nullable=false)
+    private int star;
+
+
 
 }
