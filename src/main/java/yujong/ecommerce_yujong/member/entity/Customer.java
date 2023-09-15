@@ -41,9 +41,28 @@ public class Customer {
 
 
     //< Customer(1) : Order(N). N:1 양방향 매핑. 주인객체: Ord 객체 >
-    @OneToOne(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Ord> ordList = new ArrayList<>();
 
+
+    //< Customer(1) : Order(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
+    //- 이 Customer 클래스로 만든 어떤 Customer가 있는데, 그 Customer가 새로운 주문을 한 경우,
+    //  그 Customer의 객체 정보에 그 Customer가 새로운 주문을 했다는 정보를 넣어야 하고,
+    //  이 때 그 새로운 주문 정보를 아래 메소드 addOrd를 외부 다른 클래스에서 사용하여 그 Customer 객체 내부에 넣어주는 것임.
+    public void addOrd(Ord ord){
+        ordList.add(ord); //그 Customer가 기존에 주문한 과거 주문 내역 리스트들에, 이제 이번에 새롭게 발생시킨 주문도 그 주문이력에 넣음.
+
+        if(ord.getCustomer() != this){
+            ord.setCustomer(this);
+        }
+
+    }
+
+
+
+
+
+    //< Customer(1) : Review(N). N:1 양방향 매핑. 주인객체: Review >
 
 
 

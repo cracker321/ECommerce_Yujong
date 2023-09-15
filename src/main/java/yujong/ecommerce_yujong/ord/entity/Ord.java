@@ -4,6 +4,7 @@ package yujong.ecommerce_yujong.ord.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yujong.ecommerce_yujong.member.entity.Customer;
 import yujong.ecommerce_yujong.product.entity.Product;
 
 @Data
