@@ -114,6 +114,18 @@ public class Board extends Auditable {
 
 
 
+
+
+//=============================================================================================================
+
+
+
+    //< Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment >
+    @OneToMany(mappedBy="board", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
+
+
+
 //=============================================================================================================
 
 
@@ -130,13 +142,26 @@ public class Board extends Auditable {
     //Reivew와 Board 간 연관관계 메소드를 Board 객체의 정보 내부에 넣거나 그러지 않음.
 
 
+
+    //< Review(N) : Board(1). N:1 양방향 매핑. 연관관계 편의 메소드 >
+    public void addReview(Review review){
+
+
+        reviewList.add(review);
+
+        if(review.getBoard() != null){
+            review.setBoard(this);
+        }
+
 //=============================================================================================================
 
 
+    }
 
-    //< Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment >
-    @OneToMany(mappedBy="board")
-    private List<Comment> commentList = new ArrayList<>();
+
+
+
+
 
 
 
