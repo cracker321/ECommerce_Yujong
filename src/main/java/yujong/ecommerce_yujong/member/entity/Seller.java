@@ -159,7 +159,7 @@ import java.util.List;
 
 
         //< Seller(1) : Member(1). 1:1 양방향 매핑. 연관관계 편의 메소드 > 교재 p190~
-//- set이 붙는 연관관계 편의 메소드는 기본적으로 Setter 세터와 형식이 같음!!
+        //- set이 붙는 연관관계 편의 메소드는 기본적으로 Setter 세터와 형식이 같음!!
         public void setMember(Member member){
 
             // Step 1)
@@ -172,7 +172,7 @@ import java.util.List;
             //  : 현재 특정된 판매자 Seller의 기존 회원 Member 정보 를 지워버린다.
             //    즉, 현재 특정된 판매자 Seller가 가지고 있었던 기존 회원 Member 정보를
             //    현재 특정된 판매자 Seller에서 떼어내어 제거시키는 것임.
-            //    즉, 현재 Member와 기존 Customer 객체 간의 연관관계 매핑을 끊어버리고 해제시키는 것임.
+            //    즉, 현재 판매자 Seller와 기존 회원 Member 객체 간의 연관관계 매핑을 끊어버리고 해제시키는 것임.
             //   (= 현재 특정된 판매자 Seller와 매핑되어 있는 회원 Member 객체의 판매자 Seller 정보를 null로 해버리는 것임)
             if(this.member != null){
                 this.member.setSeller(null);

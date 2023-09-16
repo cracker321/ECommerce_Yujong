@@ -47,14 +47,12 @@ public class Product {
     @Column
     private String mainImage;
 
+//==================================================================================================================
+
+
     //< Board(1) - Product(1) 일대일 양방향 매핑. 주인 객체: Board >
     @OneToOne(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private Board board;
-
-
-
-    //==================================================================================================================
-
 
 
 
@@ -81,7 +79,25 @@ public class Product {
 
          */
 
-        //Step1)
+
+        // Step 1)
+        //- 'this.board != null'
+        //  : 만약, 현재 특정된 상품 Product의 게시글 Board 정보가 비어져 있지 않은 상태(=깨끗하지 않은)이라면,
+        //   이것은 즉 곧 이 현재 상품 Product가 과거에 이미 해당 게시글 Board에 포함된 상품 Product로서 기 작서된 게시글에
+        //   포함되어 있었던지 등 어떤 경로를 통해서였든지
+        //   이 현재 상품 Product가 이 쇼핑몰에서 기존에 자신과 연결되어 있는 게시글 Board 정보를 가지고 있는 상태라는 것을 의미하므로,
+        //   (= 현재 특정된 상품 Product가 이미 어떤 다른 게시글 Board 객체와 연결되어 있는 상태인 경우 라는 의미임)
+        //- 'this.board.setSeller(null)'
+        //  : 현재 특정된 상품 Product의 기존 게시글 Board 정보 를 지워버린다.
+        //    즉, 현재 특정된 상품 Product가 가지고 있었던 기존 게시글 Board 정보를
+        //    현재 특정된 상품 Product에서 떼어내어 제거시키는 것임.
+        //    즉, 현재 상품 Product와 기존 자신이 포함되어 있던 게시글 Board 객체 간의 연관관계 매핑을 끊어버리고 해제시키는 것임.
+        //   (= 현재 특정된 상품 Product와 매핑되어 있는 게시글 Board 객체의 상품 Product 정보를 null로 해버리는 것임)
+        if(this.board != null){
+            this.board.setProduct(null);
+        }
+
+        //Step2)
         //외부 클래스 어딘가에서 이 메소드 setProduct를 새로운 인자값(=새로운 게시글 'Board board')으로 호출할 때,
         //그 때 주어지는 새로운 게시글('Board board')을 '현재 상품의 게시글('this.board')'로 새롭게 설정함.
         //즉, '현재 Product 엔티티 객체의 필드 board'를, 여기서 외부 클래스 어딘가에서 이 메소드 setProduct를 
@@ -89,7 +105,14 @@ public class Product {
         //즉, 이 때의 Product 객체가 어떤 Board에 속하는지 지정하는 것임.
         this.board = board;
 
-        //Step2)
+        //Step3)
+        //- 'board != null'
+        //  : 혹시라도 만약에, 외부에서 새롭게 들어온 게시글 Board 정보(Board board)가 비어 있는 상태가 아니면서(='&&'),
+        //    (그냥 의례적으로 NullPointerException을 방지하기 위해 입력한 부분.
+        //     당연히, 외부에서 새롭게 들어온 게시글 Board 정보가 비어 있지 않은 상태여야
+        //     (물론, 당연히 비어있지 않기 때문에 이 비어 있지 않은 정보를 떼어내면서 현재 자신의 상품 Product로서의 정보로 대체해야
+        //     하는 것임),
+        //     바로 다음에 나오는 board.getProduct() != this 이 부분에 대한 검사 검증이 진행될 수 있음. 당연한 소리임.)
         //- 외부 클래스 어딘가에서 이 메소드 setProduct를 새로운 인자값(=새로운 게시글 'Board board')으로 호출할 때,
         //  step1 에서 그 외부에서 들어온 새로운 Board 객체를 현재 Product 엔티티 객체의 필드 board의 값으로 받아들였고,
         //  이제 그 새롭게 받아들인 게시글 board가, 기존에 이미 어떤 다른 상품 Product 객체와 연결되어 있는 상태인지를 확인하는 것임.
@@ -104,7 +127,7 @@ public class Product {
         // : 아래 코드로 인해 Board 클래스 내부에서 product.setBoard(this); 호출될 가능성 있음.
         //   이 경우, 상호 호출로 인해 무한루프 발생 가능성 있음.
 
-        if(board.getProduct() != this){
+        if(board != null && board.getProduct() != this){
             board.setProduct(this);
         }
 

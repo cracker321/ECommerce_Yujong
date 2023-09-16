@@ -114,7 +114,7 @@ public class Member {
         // Step 1)
         //- 'this.customer != null'
         //  : 만약, 현재 특정된 회원 Member의 고객 Customer 정보가 비어져 있지 않은 상태(=깨끗하지 않은)이라면,
-        //   이것은 즉슨 곧 이 현재 회원 Member가 과거에 이미 회원가입을 했었다든지 어떤 경로 통해서였든지
+        //   이것은 즉 곧 이 현재 회원 Member가 과거에 이미 회원가입을 했었다든지 어떤 경로 통해서였든지
         //   이 현재 회원 Member가 이 쇼핑몰에서 기존에 자신의 고객 Customer 정보를 가지고 있는 상태라는 것을 의미하므로,
         //   (= 현재 특정된 회원 Member가 이미 어떤 다른 고객 Customer 객체와 연결되어 있는 상태인 경우 라는 의미임)
         //- 'this.customer.setMember(null)'
@@ -184,7 +184,7 @@ public class Member {
         // Step 1)
         //- 'this.seller != null'
         //  : 만약, 현재 특정된 회원 Member의 판매자 Seller 정보가 비어져 있지 않은 상태(=깨끗하지 않은)이라면,
-        //   이것은 즉슨 곧 이 현재 회원 Member가 과거에 이미 판매자회원 가입을 했었다든지 어떤 경로 통해서였든지
+        //   이것은 즉 곧 이 현재 회원 Member가 과거에 이미 판매자회원 가입을 했었다든지 어떤 경로 통해서였든지
         //   이 현재 회원 Member가 이 쇼핑몰에서 기존에 자신의 Seller 정보를 가지고 있는 상태라는 것을 의미하므로,
         //   (= 현재 특정된 회원 Member가 이미 어떤 다른 Seller 객체와 연결되어 있는 상태인 경우 라는 의미임)
         //- 'this.seller.setMember(null)'
