@@ -27,17 +27,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 //< 1. 스프링 컨테이너가 관리해주는 Bean 객체인 경우 >
 //- 스프링 컨테이너가 관리해주는 Bean 객체(Controller, Service, Repository, Compenent, Configuration, Interceptor,
-//  Filter, Aspect, TaskExecutor, Listner 클래스 등)의 클래스에서는
+//  Filter, Aspect, TaskExecutor, Listner 클래스 등)의 클래스에서는,
 //  그 클래스 위에 @AllArgsConstructor를 붙여서 그 클래스 내부의 모든 필드를 매개변수로 갖는 생성자를 만들어주거나,
-//  @RequqiredArgsConstructor를 붙여서 그 클래스 내부에 있는 fianl 또는 @NonNull이 붙은 필드를 매개변수를 갖는 생성자를 만들어줘도,
-//  이 Bean 객체들은 스프링 컨테이너가 자동으로 관리해주므로, '별도의 기본 생성자를 따로 작성해주거나 @NoArgsConstructor를 붙이지 않아도'
-//  잘 작동한다!
+//  @RequqiredArgsConstructor를 붙여서 그 클래스 내부에 있는 fianl 또는 @NonNull이 붙은 필드를 매개변수를 갖는 생성자와 같은
+//  '사용자 정의 생성자'를 만들어줘서 '기본 생성자'를 작성해야 하는 상황을 발생시켜도,
+//  이 Bean 객체들은 스프링 컨테이너가 자동으로 관리해주어 '기본 생성자'를 스프링 컨테이너가 대신 자동으로 생성해주기 때문에,
+//  개발자가 이 경우에 '별도의 기본 생성자를 따로 작성해주거나 @NoArgsConstructor를 붙이지 않아도' 잘 작동한다!
 
 
 //< 2. JPA에서의 Entity 클래스인 경우 >
 //- 그러나, 'JPA를 사용했을 때의 Entity 클래스'의 경우는 @AllArgsConstuctor 또는 @RequiredArgsConstructor를 Entity 클래스 위에
-//  붙일 경우, 반드시 public 또는 protected를 사용한 '기본 생성자 직접 작성 또는 @NoArgsConstructor 붙이기'가 필요하다!!
-//  엔티티 클래스의 기본 생성자를 작성할 때 private을 붙이면 안된다!!
+//  붙일 경우, 반드시
+//  1) 'public 또는 protected를 사용한 기본 생성자 직접 작성' 또는
+//  2) 엔티티 클래스 위에 '@NoArgsConstructor 붙이기'가 필요하다!!
+//  위 중에서 1)을 선택하고 싶은 경우, 엔티티 클래스 내부에 개발자가 직접 기본 생성자를 작성할 때는 private을 붙이면 안된다!!
 //- 왜냐하면, JPA에서 엔티티 클래스를 사용하는 경우에는, JPA 구현체(Hibernate 등)가 엔티티 객체를 생성할 때,
 //  '리플렉션'을 사용하기 때문에, 반드시 그 엔티티 클래스 내부에서 '매개변수가 없는 기본 생성자'를 작성해줘야 한다!
 //  그리고, 그 기본 생성자의 접근제어자는 반드시 public 또는 protected로 선언되어야 하고,
@@ -45,7 +48,7 @@ import org.springframework.web.bind.annotation.RestController;
 //- JPA에서의 Java 리플렉션은, JPA 구현체(Hibernate 등)의 실행 시점에 클래스의 메타데이터 정보를 얻거나, 수정하거나, 메소드와 필드에
 //  접근할 수 있도록 해주는 Java API임.
 //  JPA가 엔티티 객체를 생성할 때도 이 Java 리플렉션을 사용하는데, 이 때 인자(매개변수)가 없는 기본 생성자가 필요함.
-//  왜냐하면, Java 리플렉션으로 객체를 생성할 때 Calss.newInstance() 메소드 또는 Constructor,newInstance() 메소드 등을 사용하느넫,
+//  왜냐하면, Java 리플렉션으로 객체를 생성할 때 Calss.newInstance() 메소드 또는 Constructor,newInstance() 메소드 등을 사용하는데,
 //  이들 메소드는 모두 인자(매개변수)가 없는 기본 생성자를 호출하기 때문임.
 //  만약 해당 클래스에 기본 생성자가 없거나, 있더라도 그 기본 생성자가 private으로 선언되어 있는 상태라면,
 //  위 메소드들은 IllegalAccessException을 발생시켜 객체 생성에 실패하게 됨.
