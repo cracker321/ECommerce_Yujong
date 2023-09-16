@@ -3,6 +3,7 @@ package yujong.ecommerce_yujong.board.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -95,7 +96,16 @@ import org.springframework.web.bind.annotation.RestController;
 //cf) '회원 엔티티 Member', '배송 엔티티 Delivery'와 같은 엔티티 객체들은 컨트롤러, 서비스, 레펏 등 여기저기에 다 걸쳐가며
 //    왔다갔다하며 사용되는 것이고, 따라서 이 엔티티 객체들은 의존성 주입의 대상이 아님!
 //    의존성 주입의 대상은 대부분 Service, Repository 이다!!
+@RequestMapping("/boards")
+@RequiredArgsConstructor
+@RestController //@Controller + @ResponseBody
 public class BoardController {
 
+
+    private final BoardService boardService;
+
+
     //게시글 등록
+    @PostMapping
+    public ResponseEntity
 }

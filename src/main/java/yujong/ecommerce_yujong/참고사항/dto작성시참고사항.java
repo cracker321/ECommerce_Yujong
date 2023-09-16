@@ -1,4 +1,4 @@
-package yujong.ecommerce_yujong.board.dto;
+package yujong.ecommerce_yujong.참고사항;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 //@NoArgsConstructor
 //@Data //기본적으로 DTO에는 '@Data'를 붙여줌.
         //dto에는 기본적으로 반드시 @Getter와 @NoArgsConstructor를 붙여줘야 한다!
-public class 참고사항 {
+public class dto작성시참고사항 {
 
     /*
     < dto에는 가능하면 Wrapper 클래스(Integer, Long 등)를 사용해라 >
@@ -35,3 +35,8 @@ public class 참고사항 {
       나이 정보: 사람의 나이를 나타낼 때, 나이를 모를 경우 "값 없음"을 나타내기 위해 Integer를 사용할 수 있습니다.
      */
 }
+
+
+
+
+
