@@ -141,7 +141,12 @@ public class Product {
 
 
     @ManyToOne
-    @JoinColumn(name="sellerId", referencedColumnName="sellerId")
+    @JoinColumn(name="seller_id")
+    //@JoinColumn(name="sellerId", referencedColumnName="sellerId")
+    //'referencedColumnName' 관련해서 아래 두 링크 반드시 참조!
+    //결론: @JoinColumn 사용할 떄, referencedColumnName은 보통 다 생략한다!
+    //https://boomrabbit.tistory.com/217
+    //https://resilient-923.tistory.com/416
     private Seller seller;
 
 

@@ -41,7 +41,12 @@ public class Board extends Auditable {
 
     //< Board(1) : Product(1). 1:1 양방향 매핑. 주인객체: Board 객체 >
     @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="product_id", referencedColumnName = "prodcutId") //이렇게 @JoinColumn이 있는 필드의 상위 엔티티 클래스가 주인객체! 여기서는 Board객체가 주인!
+    @JoinColumn(name="product_id")
+    //@JoinColumn(name="product_id", referencedColumnName = "prodcutId") //이렇게 @JoinColumn이 있는 필드의 상위 엔티티 클래스가 주인객체! 여기서는 Board객체가 주인!
+    //'referencedColumnName' 관련해서 아래 두 링크 반드시 참조!
+    //결론: @JoinColumn 사용할 떄, referencedColumnName은 보통 다 생략한다!
+    //https://boomrabbit.tistory.com/217
+    //https://resilient-923.tistory.com/416
     private Product product;
 
 
@@ -109,7 +114,11 @@ public class Board extends Auditable {
     //< Board(N) : Seller(1). N:1 양방향 매핑. 주인객체: Board >
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="seller_id", referencedColumnName = "sellerId")
+    @JoinColumn(name="seller_id")//'referencedColumnName' 관련해서 아래 두 링크 반드시 참조!
+    //결론: @JoinColumn 사용할 떄, referencedColumnName은 보통 다 생략한다!
+    //https://boomrabbit.tistory.com/217
+    //https://resilient-923.tistory.com/416
+    //@JoinColumn(name="seller_id", referencedColumnName = "sellerId")
     private Seller seller;
 
 

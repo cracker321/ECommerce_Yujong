@@ -22,14 +22,14 @@ public class Comment extends Auditable{
 
     //< Comment(N) : Member(1). N:1 양방향 매핑. 주인객체: Comment >
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="member_id")
+    @JoinColumn(name="member_id") //이게 Member 테이블의 PK키. https://boomrabbit.tistory.com/217
     @ToString.Exclude
     private Member member;
 
 
     //< Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment >
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="board_id") //이게 Board 테이블의 PK키.
+    @JoinColumn(name="board_id") //이게 Board 테이블의 PK키. https://boomrabbit.tistory.com/217
     @ToString.Exclude
     private Board baord;
 
