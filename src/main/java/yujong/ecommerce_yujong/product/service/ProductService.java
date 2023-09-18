@@ -23,7 +23,7 @@ public class ProductService {
 
 //================================================================================================================
 
-    //[ 상품 등록 ]
+    //[ DB에 상품 등록 ]
     public Product createProduct(Seller seller, BoardPostDto boardPostDto){
         //순서1) 클라이언트로부터 넘어온 Json 객체 데이터의 본문(body)를 컨트롤러 Board의 개별 각각 컨트롤러 메소드에 붙어 있는
         //      @RequestMapping, @GetMapping, @PostMapping 등을 통해 클라이언트와 연결된 URL에 링크시켜서,
@@ -49,6 +49,8 @@ public class ProductService {
         //- 이 메소드 createProduct의 인자로 외부에서 들여온 boardPostDto 객체를 '매퍼 ProductMapper'를 사용해서
         //  '상품 Product 엔티티 객체'로 변환시킴.
         //  즉, boardPostDto 객체의 필드 구성에 맞게 커스터마이징(?)한 상품 Product 객체를 생성하는 것임.
+
+
         product.setStatus(Product.ProductStatus.PRD_SELLING);
         product.setSeller(seller);
 
