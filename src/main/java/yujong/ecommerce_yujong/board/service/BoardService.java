@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.board.mapper.BoardMapper;
+import yujong.ecommerce_yujong.board.repository.BoardRepository;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.member.service.SellerService;
 import yujong.ecommerce_yujong.product.entity.Product;
@@ -22,6 +23,7 @@ public class BoardService {
     private final BoardMapper boardMapper;
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final BoardRepository boardRepository;
 
     public Board createBoard(Long sellerId, BoardPostDto boardPostDto){
 
@@ -51,6 +53,10 @@ public class BoardService {
 
         //< 위에서의 '판매자 Seller'와 '게시글 Board 내에 들어갈 상품 Product 자체 정보'를 바탕으로 이제 '게시글 Board'를 DB에 등록 >
         Board board = boardMapper.boardPostDtoToBoard(boardPostDto);
+        board.setSeller(findSeller);
+        board.setProduct(product);
+        product.setLeftStock(product.getStock());
+        boardRepository.save(board);
 
 
     }
