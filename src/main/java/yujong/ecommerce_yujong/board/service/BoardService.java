@@ -26,7 +26,7 @@ public class BoardService {
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
-    public BoardResponseDto createBoard(Long sellerId, BoardPostDto boardPostDto){
+    public BoardResponseDto createBoard(BoardPostDto boardPostDto){
 
         //*****중요*****
         //- '메소드 BoardService.createBoard(...)'는, '컨트롤러 메소드 BoardService'에서 사용되는 메소드이기 때문에,
@@ -66,6 +66,35 @@ public class BoardService {
 
     }
 
+//=============================================================================================================
+
+
+
+
+
+//=============================================================================================================
+
+
+
+
+
+
+//=============================================================================================================
+
+
+
+
+
+
+//=============================================================================================================
+
+
+
+
+
+
+
+//=============================================================================================================
 
         
         

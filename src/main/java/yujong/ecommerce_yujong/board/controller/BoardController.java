@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
+import yujong.ecommerce_yujong.board.service.BoardService;
 
 @Data
 @AllArgsConstructor

@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
+import yujong.ecommerce_yujong.board.dto.BoardTotalResponseDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.product.entity.Product;
 
@@ -34,4 +35,12 @@ public interface BoardMapper {
     //- 비유&실생활
     //  : 상점(Board)과 제품(Product)에서 모든 필요한 정보(판매자 ID, 제품 상태 등등)를 모아서
     //    새로운 팜플렛(BoardResponseDto)를 만드는 것과 같음.
+
+
+
+
+    @Mapping(target="sellerId", expression="java(board.getSeller().getSellerId())")
+    @Mapping(target = "sellerImage", expression = "java(board.getSeller().getImageUrl())")
+    @Mapping(target = "name", expression = "java(board.getSeller().getMember().getName())")
+    BoardTotalResponseDto productToBoardTotalResponseDto(Product product, Board board);
 }
