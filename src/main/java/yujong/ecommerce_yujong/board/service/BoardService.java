@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
+import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.board.mapper.BoardMapper;
 import yujong.ecommerce_yujong.board.repository.BoardRepository;
@@ -25,7 +26,7 @@ public class BoardService {
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
-    public Board createBoard(Long sellerId, BoardPostDto boardPostDto){
+    public BoardResponseDto createBoard(Long sellerId, BoardPostDto boardPostDto){
 
         //*****중요*****
         //- '메소드 BoardService.createBoard(...)'는, '컨트롤러 메소드 BoardService'에서 사용되는 메소드이기 때문에,
@@ -56,7 +57,11 @@ public class BoardService {
         board.setSeller(findSeller);
         board.setProduct(product);
         product.setLeftStock(product.getStock());
-        boardRepository.save(board);
+        boardRepository.save(board); //DB에 게시글 Board 최종 등록 저장
+
+        BoardResponseDto boardResponseDto = boardMapper.productToBoardResponseDto(product, board);
+
+        return boardResponseDto;
 
 
     }
