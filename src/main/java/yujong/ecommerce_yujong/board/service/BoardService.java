@@ -39,8 +39,11 @@ public class BoardService {
 //      아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. >
         Seller findSeller = sellerService.findVerifiedSeller(sellerId);
 
+
         //< 게시글 Board 내에 들어갈 상품 Product에 필요한 상품 Product 그 자체의(자체에) 필요한 정보 입력 >
-        productService.createProduct(
+        //- 'productService.createProduct'는 'DB에 저장시킨,
+        //   BoardPostDto 객체의 필드 구성에 맞게 커스터마이징된 상품 Product 엔티티 객체를 반환함.
+        Product product = productService.createProduct(findSeller, boardPostDto);
 
 
         }
