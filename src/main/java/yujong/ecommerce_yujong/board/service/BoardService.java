@@ -19,6 +19,8 @@ public class BoardService {
     public Board createBoard(Board board, Long sellerId){
 
         Seller findSeller = sellerService.findVerifiedSeller(sellerId);
+        
+        
 
 
 
