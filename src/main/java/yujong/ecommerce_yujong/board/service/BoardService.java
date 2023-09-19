@@ -1,9 +1,9 @@
 package yujong.ecommerce_yujong.board.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
 import yujong.ecommerce_yujong.board.entity.Board;
@@ -14,6 +14,8 @@ import yujong.ecommerce_yujong.member.service.SellerService;
 import yujong.ecommerce_yujong.product.entity.Product;
 import yujong.ecommerce_yujong.product.repository.ProductRepository;
 import yujong.ecommerce_yujong.product.service.ProductService;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly=true)
@@ -26,6 +28,13 @@ public class BoardService {
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
+
+
+//=============================================================================================================
+
+
+    //[ 게시글 Board 등록 Create ]
+    
     public BoardResponseDto createBoard(BoardPostDto boardPostDto){
 
         //*****중요*****
@@ -41,24 +50,28 @@ public class BoardService {
         //  죽, 직, 간접적으로 연결되어 있는 다른 외부 클래스의 메소드에서는 BoardPostDto 객체를 사용할 수 있는 것이다!
 
 
-        //< DB에 현재 존재하는 판매자 Seller 인지 여부를 확인하고, 존재한다면 그 판매자 Seller를 가져와서 반환해주고,
-        //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. >
+        //순서1) < 'SellerService.findVerifiedSeller()':
+        //        DB에 현재 존재하는 판매자 Seller 인지 여부를 확인하고, 존재한다면 그 판매자 Seller를 가져와서 반환해주고,
+        //        아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. >
         Seller findSeller = sellerService.findVerifiedSeller(boardPostDto.getSellerId());
 
 
-        //< 게시글 Board 내에 들어갈 DB에 이미 저장시킨 상품 Product에 필요한 상품 Product 그 자체의(자체에) 필요한 정보 입력 >
-        //- 'productService.createProduct'는 'DB에 등록 저장시키는 BoardPostDto 객체의 필드 구성에 맞게
+        //순서2) < 게시글 Board 내에 들어갈 DB에 이미 저장시킨 상품 Product에 필요한 상품 Product 그 자체의(자체에) 필요한 정보 입력 >
+        //- 'productService.createProduct': 'DB에 등록 저장시키는 BoardPostDto 객체의 필드 구성에 맞게
         //   커스터마이징된 DB에 저장 등록시킬 상품 Product 엔티티 객체를 DB에 등록 저장시키고 그 저장시킨 Product를 꺼내와서 반환함.
         Product product = productService.createProduct(findSeller, boardPostDto);
 
 
-        //< 위에서의 '판매자 Seller'와 '게시글 Board 내에 들어갈 상품 Product 자체 정보'를 바탕으로 이제 '게시글 Board'를 DB에 등록 >
+        //순서3) < 위에서의 '판매자 Seller'와 '게시글 Board 내에 들어갈 상품 Product 자체 정보'를 바탕으로 이제
+        //        '게시글 Board'를 DB에 등록 >
         Board board = boardMapper.boardPostDtoToBoard(boardPostDto);
         board.setSeller(findSeller);
         board.setProduct(product);
         product.setLeftStock(product.getStock());
         boardRepository.save(board); //DB에 게시글 Board 최종 등록 저장
 
+
+        //순서4) < >
         BoardResponseDto boardResponseDto = boardMapper.productToBoardResponseDto(product, board);
 
         return boardResponseDto;
@@ -69,6 +82,23 @@ public class BoardService {
 //=============================================================================================================
 
 
+    //[ 게시글 Board 수정 Update ]
+
+    public BoardResponseDto updateBoard(long boardId, BoardPatchDto boardPatchDto){
+
+
+        //순서1)
+        // < 'BoardService.findVerifiedBoard()':
+        //   DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 가져와서 반환해주고,
+        //   아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.BOARD_NOT_FOUND 를 발생시켜줌. >
+        Board findBoard = findVerifiedBoard(boardPatchDto.getBoardId());
+
+
+        //순서2)
+
+
+
+    }
 
 
 
@@ -96,10 +126,22 @@ public class BoardService {
 
 //=============================================================================================================
 
-        
-        
 
 
+
+    //[ DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 가져와서 반환해주고,
+    //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.BOARD_NOT_FOUND 를 발생시켜줌. ]
+    public Board findVerifiedBoard(long boardId){
+
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        Board findBoard = optionalBoard.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
+
+        return findBoard;
+    }
+
+
+//=============================================================================================================
 
 
 
@@ -131,4 +173,3 @@ public class BoardService {
 
     }
 
-}
