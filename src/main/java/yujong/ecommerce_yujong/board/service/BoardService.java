@@ -43,7 +43,7 @@ public class BoardService {
 
         //< DB에 현재 존재하는 판매자 Seller 인지 여부를 확인하고, 존재한다면 그 판매자 Seller를 가져와서 반환해주고,
         //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. >
-        Seller findSeller = sellerService.findVerifiedSeller(sellerId);
+        Seller findSeller = sellerService.findVerifiedSeller(boardPostDto.getSellerId());
 
 
         //< 게시글 Board 내에 들어갈 DB에 이미 저장시킨 상품 Product에 필요한 상품 Product 그 자체의(자체에) 필요한 정보 입력 >
