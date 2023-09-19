@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,7 +50,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                 //클라이언트의 접속 URL 요청별로 개별 클라이언트의 권한에 맞춰 URL 별 접근 권한을 설정하는 메소드임.
-                //
+                //아래에 이어지는 내용들을 총괄하는 설정임.
 
                         /* [ 메인 페이지는 모두 접근이 가능해야한다 ] */
                         //클라이언트로부터 넘어온 Json 데이터가 http GET 방식이면서, 
@@ -137,12 +139,17 @@ public class SecurityConfig {
 
                 < AuthenticationEntryPooint >
                 - '인증되지 않은 사용자 unauthenticated user'가 접근이 제한된 리소스(페이지 등)에 접근하려고 할 때 호출됨.
+                  e.g) 로그인되지 않은 사용자가 MyPage에 접근하려고 하는 경우에, 그 사용자를 다시 로그인 페이지로 리디렉션해서
+                       돌려보냄.
+                       또는 그 사용자에게 인증 오류 응답을 생성해서 보여줌.
                 - 개발자가 별도의 '사용자 정의 핸들러 MemberAuthenticationEntryPoint()'를 만들고,
                   그 내부에 이 경우에 맞게 적절하게 응답할 내용을 코드로 작성함.
                 
                 
                 < AccessDeniedHandelr >
-                - 이미 인증된 사용자이지만, 자신의 권한으로는 접근하지 못하는 리소스(페이지 등)에 접근하려고 할 때 호출됨.
+                - 권한이 부족한 사용자의 접근을 처리하는 커스텀 접근 거부 핸들러를 설정함.
+                - 이미 인증된 사용자이지만, 자신의 권한으로는 접근하지 못하는 리소스(페이지 등)에 접근하려고 할 때 호출되어,
+                  그 사용자를 어떻게 처리할지를 결정해주는 메소드.
                 - 개발자가 별도의 '사용자 정의 핸들러 MemberAccessDeniedHandler()'를 만들고,
                   그 내부에 이 경우에 맞게 적절하게 응답할 내용을 코드로 작성함.
 
@@ -151,7 +158,19 @@ public class SecurityConfig {
         
 
         return http.build();
-    }
+        //위에서 작성한 스프링시큐리티 설정을 마무리하고, 해당 설정을 적용 빌드하여 HTTP 보안을 구성하는 부분.
+        //이 코드는 시큐리티 설정이 모두 완료되었음을 의미하며, 이를 통해 위에서 작성한 보안 설정들이 실제로 적용됨.
+        //- 'http': '시큐리티 내장 객체 HttpSecurity'를 참조하는 변수 http.
+        //          '시큐리티 내장 클래스 HttpSecurity'는 스프링 시큐리티의 구성을 정의하는 데 사용되는 핵심 클래스임.
+        //- 'build()': 이 클래스 맨 앞 쪽에 있는 'http.cors. ...'으로 체인 방식으로 작성하여 이어지는 설정을 이제 빌드하여
+        //             HTTP 보안을 구성해줌. 즉, 이제 .build()를 통해 최종 완성 작품인 '시큐리티 필터 체인'을 생성한 것임.
+        //             즉, 위에서 작성한 모든 정책들로부터 최종적인 '보안 필터 체인 객체 HttpSecurity 객체'를 생성한 것임.
+        //             그리고 이것을 이제 최종적으로 이 SecurityConfig 클래스의 리턴값으로 반환해줌.
+
+
+//=============================================================================================================
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
