@@ -23,10 +23,19 @@ public class SecurityUtil {
         [ 스프링 시큐리티 내장 클래스 SeucrityContextHolder ]
 
         - 현재 스레드(현재 실행 중인 프래그램의 실행 흐름)의 보안 컨텍스트 정보를 저장하고 제공하는 유틸리티 클래스
+        - 'SecurityContextHolder.getContext()':
+
         -
+          순서1)
+          사용자가 로그인하면, 스프링 시큐리티는 현재 스레드의 SecurityContext에 해당 사용자의 보안 정보를 설정합니다. 
+          이 정보에는 사용자의 식별 정보(예: 사용자 이름) 및 권한(예: 어떤 작업을 할 수 있는지)가 포함됩니다. 
+          이제 이 스레드에서는 언제든지 현재 사용자의 정보에 접근할 수 있습니다.
+
 
          */
         /* ContextHolder 에서 정보 가져오기 */
+
+        //< 현재 로그인 완료되어 인증된 사용자의 정보(사용자 이름,
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || authentication.getName() == null) {
