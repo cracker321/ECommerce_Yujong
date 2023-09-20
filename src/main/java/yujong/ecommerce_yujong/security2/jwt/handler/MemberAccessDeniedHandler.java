@@ -1,15 +1,17 @@
-package yujong.ecommerce_yujong.security.jwt.handler;
+package yujong.ecommerce_yujong.security2.jwt.handler;
 
-import com.nimbusds.jose.shaded.gson.Gson;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
+import yujong.ecommerce_yujong.global.error.ErrorResponse;
+import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /* 접근에 필요한 권한 없이 접근 -> 403 forbidden 에러 */
@@ -32,3 +34,4 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
     }
+}

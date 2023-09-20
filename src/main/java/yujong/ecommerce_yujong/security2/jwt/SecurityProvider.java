@@ -1,5 +1,8 @@
-package yujong.ecommerce_yujong.security.jwt;
+package yujong.ecommerce_yujong.security2.jwt;
 
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +12,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
+import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 import yujong.ecommerce_yujong.member.entity.Member;
+import yujong.ecommerce_yujong.security2.jwt.dto.TokenDto;
+import yujong.ecommerce_yujong.security2.utils.CustomAuthorityUtils;
 
 import java.security.Key;
 import java.util.Date;
@@ -44,7 +51,7 @@ public class SecurityProvider{
 
     public TokenDto generatedTokenDto(String username) {
 
-        /* 🐥 권한 가져오기 */
+        /* 권한 가져오기 */
         Member member = memberRepository.findMemberByEmail(username);
         String authorities = member.getRole();
 
@@ -52,10 +59,10 @@ public class SecurityProvider{
         Date accessTokenExpiration = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiration = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
-        /* 🐹 Access Token 생성 */
+        /* Access Token 생성 */
         String accessToken = createAccessToken(username, authorities, accessTokenExpiration);
 
-        /* 🦊 Refresh Token 생성 */
+        /* Refresh Token 생성 */
         String refreshToken = createRefreshToken(username, refreshTokenExpiration);
 
         return TokenDto.builder()
@@ -66,7 +73,7 @@ public class SecurityProvider{
                 .build();
     }
 
-    /* 🐹 Access Token 생성 */
+    /* Access Token 생성 */
     public String createAccessToken(String username, String role, Date expiration) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", username);

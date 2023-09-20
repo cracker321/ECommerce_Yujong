@@ -1,4 +1,4 @@
-package yujong.ecommerce_yujong.security.jwt.dto;
+package yujong.ecommerce_yujong.security2.jwt.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

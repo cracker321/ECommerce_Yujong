@@ -1,4 +1,4 @@
-package yujong.ecommerce_yujong.security.config;
+package yujong.ecommerce_yujong.security2.config;
 
 
 import lombok.RequiredArgsConstructor;
@@ -6,8 +6,8 @@ import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import yujong.ecommerce_yujong.security.jwt.SecurityProvider;
-import yujong.ecommerce_yujong.security.jwt.filter.SecurityFilter;
+import yujong.ecommerce_yujong.security2.jwt.SecurityProvider;
+import yujong.ecommerce_yujong.security2.jwt.filter.SecurityFilter;
 
 @RequiredArgsConstructor
 public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {

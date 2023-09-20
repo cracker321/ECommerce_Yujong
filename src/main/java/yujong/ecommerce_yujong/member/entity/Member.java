@@ -1,12 +1,13 @@
 package yujong.ecommerce_yujong.member.entity;
 
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yujong.ecommerce_yujong.comment.entity.Comment;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -39,7 +40,7 @@ public class Member {
     private String socialId;
 
     //< 소설 로그인 추가하면서, 해당 판별을 위한 provider 타입 추가 >
-    @Enumerated(EnumType.STRING);
+    @Enumerated(EnumType.STRING)
     private ProviderType providerType;
 
     //# 확인하기!
@@ -49,7 +50,7 @@ public class Member {
 
     //# 확인하기!!
     //< Security 사용하여 역할 추가 >
-    @ElementCollection(fetch=FetchType.EAGER)
+    @ElementCollection(fetch= FetchType.EAGER)
     private List<String> roles;
 
 

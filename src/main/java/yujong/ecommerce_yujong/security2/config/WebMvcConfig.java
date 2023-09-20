@@ -1,4 +1,4 @@
-package yujong.ecommerce_yujong.security.config;
+package yujong.ecommerce_yujong.security2.config;
 
 
 import org.springframework.context.annotation.Configuration;

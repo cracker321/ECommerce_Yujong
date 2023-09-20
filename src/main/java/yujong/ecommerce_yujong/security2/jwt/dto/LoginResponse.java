@@ -1,4 +1,4 @@
-package yujong.ecommerce_yujong.security.jwt.dto;
+package yujong.ecommerce_yujong.security2.jwt.dto;
 
 import lombok.*;
 
@@ -7,6 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
+
+
 
     public static class Member{
         private long memberId;

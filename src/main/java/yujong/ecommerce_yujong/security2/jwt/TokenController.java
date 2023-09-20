@@ -1,4 +1,4 @@
-package yujong.ecommerce_yujong.security.jwt;
+package yujong.ecommerce_yujong.security2.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
+import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 import yujong.ecommerce_yujong.member.entity.Member;
+import yujong.ecommerce_yujong.member.mapper.MemberMapper;
 import yujong.ecommerce_yujong.member.service.MemberService;
-import yujong.ecommerce_yujong.security.jwt.dto.LoginResponse;
-import yujong.ecommerce_yujong.security.jwt.dto.TokenDto;
+import yujong.ecommerce_yujong.security2.jwt.dto.LoginResponse;
+import yujong.ecommerce_yujong.security2.jwt.dto.TokenDto;
+import yujong.ecommerce_yujong.security2.service.SecurityService;
 
 import java.security.Principal;
 
@@ -24,6 +28,8 @@ public class TokenController {
     private final SecurityService securityService;
     private final MemberService memberService;
     private final MemberMapper mapper;
+
+
 
     /* 엑세스 토큰 재발급 */
     @PostMapping("/reissue/access")
@@ -36,6 +42,8 @@ public class TokenController {
         return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
     }
 
+
+
     /* 리프레시 토큰 + 엑세스 토큰 재발급 */
     @PostMapping("/reissue/refresh")
     public ResponseEntity newRefreshToken(HttpServletRequest request, HttpServletResponse response) {
@@ -46,6 +54,9 @@ public class TokenController {
 
         return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
     }
+
+
+
 
     /* 새로 고침 */
     @GetMapping("/access")

@@ -1,14 +1,13 @@
 package yujong.ecommerce_yujong.member.entity;
 
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.ord.entity.Ord;
 import yujong.ecommerce_yujong.review.entity.Review;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class Customer {
     //< Customer(1) : Member(1). 1:1 양방향 매핑. 주인객체: Customer 객체 >
     //- 현재 Customer 클래스는 이 클래스 내부에 바로 아래처럼 member_id 라는 Member 객체의 PK를 가지고 있기 때문에,
     //  Customer 객체가 주인 객체가 되는 것이다!
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
 
