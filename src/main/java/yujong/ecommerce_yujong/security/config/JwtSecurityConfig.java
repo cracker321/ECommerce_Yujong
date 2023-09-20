@@ -17,7 +17,10 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
     - 스프링 시큐리티의 기본 설정을 확장하고 사용자 정의 설정을 적용하는 클래스.
     - 비유&실생활 예시
-      * 'SecurityConfigurerAdpater<>{}': 집주인의 입장이 되어, 집 대문의 잠금 장치를 어떠헥 설정할지, 누구에게 열어 줄지 결정하는 역할.
+      * 'SecurityConfigurerAdpater<>{}': 집주인의 입장이 되어, 집 대문의 잠금 장치를 어떠헥 설정할지,
+                                         누구에게 열어 줄지 결정하는 역할.
+                                         DefaultSecurityFilterChain 및 HttpSecurity 와 조합하여
+                                         보안 설정을 구축하고, 사용자 지정 보안 로직을 추가하는 역할을 함.
       * 'DefaultSecurityFilterChain': 집 대문에 설정된 잠금장치 자체를 의미. 스프링 시큐리티가 기본 제공하는 디폴트 필터 체인임.
       * 'HttpSecurity': 이 잠금장치를 만들 때 필요한 재료, 도구. 즉, SecurityConfig 파일에서 작성한
                         시큐리티 필터 체인.
@@ -29,7 +32,14 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
     private final SecurityProvider securityProvider;
 
 
-    @Override
+
+    /*
+    [ 오버라이딩한 메소드 configure(HttpSecurity http){} ]
+
+
+
+     */
+    @Override //메소드 오버라이딩
     public void configure(HttpSecurity http) {
         SecurityFilter customFilter = new SecurityFilter(securityProvider);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
