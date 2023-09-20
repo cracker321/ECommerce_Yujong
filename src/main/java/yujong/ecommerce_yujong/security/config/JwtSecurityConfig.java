@@ -50,6 +50,11 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
           앞에 배치하여, 이 클래스 실행 전에 먼저 우선하여 동작하도록 설정함.
           즉, 필터 체인 중에서 UsernamePasswordAuthenticationFilter 체인보다 customFilter 체인이 먼저 실행되는 것임.
           addFilterBefore 메소드를 사용하면, 특정 필터를 다른 필터보다 우선하여 작동시키도록 순서를 지정할 수 있음.
+      * 'UsernamePasswordAuthenticationFilter'
+        : 스프링 시큐리티에서 제공하는 필터로, Http 요청에서 사용자 이름과 패스워드를 추출하여 인증을 수행함.
+          HTTP 요청의 특정 파라미터(username, password 기본값)에서 정보를 추출함.
+          POST 요청과 연동되며, 보통 /login 경로에서 작동함.
+          실패하면 설정된 AuthenticationFailureHandler를, 성공하면 AuthenticationSuccessHandler를 호출함.
 
      */
     @Override //메소드 오버라이딩
