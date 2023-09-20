@@ -1,4 +1,17 @@
 package yujong.ecommerce_yujong.security.config;
 
-public class JwtSecurityConfig {
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.DefaultSecurityFilterChain;
+import yujong.ecommerce_yujong.security.jwt.SecurityProvider;
+
+@RequiredArgsConstructor
+public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+
+    private final SecurityProvider securityProvider;
+
+
+
 }
