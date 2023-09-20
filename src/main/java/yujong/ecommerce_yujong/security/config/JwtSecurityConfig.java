@@ -36,7 +36,20 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
     /*
     [ 오버라이딩한 메소드 configure(HttpSecurity http){} ]
 
-
+    - 'new SecurityFilter(securityProvider)'
+      : 사용자 정의(커스터마이징한) 새로운 보안 기능(시큐리티 필터)을 추가하는 메소드.
+        스프링 시큐리티 내장 클래스 SecurityFilter().
+        즉, SecurityFilter 객체 내부에 이미 사용자 정의 필터 코드를 내가 작성해놨고,
+        그것을 여기에 추가로 적용시키는 것임.
+        사용자 정의 필터 로직을 추가하여 보안 로직을 좀 더 세밀하게 만들 수 있음.
+    - 'http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class)
+      * 'http': 스프링 시큐리티에서 보안 설정을 담당하는 내장 객체 HttpSecurity
+      * 'addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class)'
+        : 스프링 시큐리티 내장 클래스 HttpSecurity 의 내장 메소드 addFilterBefore.
+          사용자 정의 보안 필터 customFilter를 인자로 들어온 UsernamePasswordAuthenticationFilter 클래스 보다
+          앞에 배치하여, 이 클래스 실행 전에 먼저 우선하여 동작하도록 설정함.
+          즉, 필터 체인 중에서 UsernamePasswordAuthenticationFilter 체인보다 customFilter 체인이 먼저 실행되는 것임.
+          addFilterBefore 메소드를 사용하면, 특정 필터를 다른 필터보다 우선하여 작동시키도록 순서를 지정할 수 있음.
 
      */
     @Override //메소드 오버라이딩
