@@ -53,15 +53,21 @@ public class SecurityUtil {
 
 
          */
+
         /* ContextHolder 에서 정보 가져오기 */
 
-        //< 현재 로그인 완료되어 인증된 사용자의 정보 전체 전반을 SecurityContextHolder를 통해 가져옴 >
+        //순서1) 현재 로그인 완료되어 인증된 사용자의 정보 전체 전반을 SecurityContextHolder를 통해 가져옴 >
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+
+        //순서2) 만약 사용자의 인증정보를 담고 있는 Authentication 객체가 null(아직 로그인 인증 완료된 사용자 없음) 또는
+        //      authentication.getName() 값이 null(로그인 인증 완료된 사용자의 이름/이메일 정보가 없음)인 경우에는
+        //      RuntimeException을 발생시킴.
         if (authentication == null || authentication.getName() == null) {
             throw new RuntimeException("해당하는 인증 정보가 존재하지 않습니다.");
         }
 
+        //순서3) 사용자의 이름(또는 이메일)을 반환해줌.
         return authentication.getName();
     }
 }
