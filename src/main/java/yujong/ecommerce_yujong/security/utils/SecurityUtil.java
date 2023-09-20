@@ -16,18 +16,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityUtil {
     private SecurityUtil() {}
 
+    //static으로 선언되었기에, 외부 클래스 어디에서나 getCurrentEmail() 메소드를
+    //따로 객체 생성하지 않고 바로 호출해서 사용 가능함.
     public static String getCurrentEmail() {
 
 
         /*
         [ 스프링 시큐리티 내장 클래스 SeucrityContextHolder ]
 
-        - Authentication 객체는 스프링 시큐리티에서 로그인이 완료되어 인증된 현재 사용자의 인증 정보가 저장되는 객체임.
+        - 스프링 시큐리티 내장 객체 Authentication 는 스프링 시큐리티에서 로그인이 완료되어 인증된 현재 사용자의 인증 정보가
+          저장되는 객체임.
           이 객체는 주로 사용자의 ID, 비밀번호, 권한 정보 등을 포함함.
           보통 AuthenticationProvider 에 의해 생성되며, 그 후 SecurityContext 에 저장됨.
           이렇게 함으로써, 애플리케이션의 다른 부분에서도 현재 인증된 사용자의 정보를 쉽게 참조할 수 있음.
-
-        - 현재 스레드(현재 실행 중인 프래그램의 실행 흐름)의 보안 컨텍스트 정보를 저장하고 제공하는 유틸리티 클래스
+        - 스프링 시큐리티 내장 객체 SecurityContextHolder는 현재 스레드(현재 실행 중인 프래그램의 실행 흐름)의
+          보안 컨텍스트 정보를 저장하고 제공하는 유틸리티 클래스임.
+          SecurityContextHolder 를 통해 현재 실행 중인 스레드와 연관된 보안 컨텍스트에 접근할 수 있음.
+          SecurityContextHolder 안에는 Authentication 객체가 들어있음.
         - 'SecurityContextHolder.getContext().getAuthentication()
           : 보안컨텍스트를 담당하는(현재 로그인 완료되어 인증된 사용자
 
