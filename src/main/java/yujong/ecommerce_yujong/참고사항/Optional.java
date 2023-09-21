@@ -3,6 +3,7 @@ package yujong.ecommerce_yujong.참고사항;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.member.repository.SellerRepository;
 
@@ -48,7 +49,6 @@ public class Optional {
 //            아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. >
 //        public Seller findVerifiedSeller(long sellerId) {
 //
-//ㄴ
 //            //- 'sellerRepository.findById(sellerId)'
 //            //   : DB로부터 판매자 Seller 객체를 findById를 통해 가져옴
 //            //- 'Optional<Seller> optionalSeller'
@@ -62,13 +62,22 @@ public class Optional {
 //            //   이 SellerRepository를 호출한 부분 아래에 반드시 null을 처리해주는 orElseThrow을 작성해줘야 한다!!
 
 
-//            //- 'optionalSeller.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOW_FOUND));
+//            //- 'optionalSeller.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 //            //  : 윗 라인에서 감싼 Optional 객체 안에 db로부터 조회해서 가져온 판매자 Seller 객체가 있으면
-//            //    당연히 그 판매자 Seller 객체를 반환해주고,
+//            //    당연히 그 판매자 Seller 객체를 Optional 객체로 감싸서 반환해주고,
 //            //    만약 외부에서 들어온 판매자 id에 해당하는 판매자 Seller 객체가 없어서 가져오지 못하는 경우 즉, null인 경우라면
 //            //    개발자인 내가 지정한 사용자 예외인  'global 디렉토리 안에 작성한 클래스 BusinessLogicException'를 기반으로
 //            //    BusinessLogicException 객체를 생성해서 그 BusinessLogicException 객체의 필드 중 하나인
 //            //    ExceptionCode.MEMBER_NOT_FOUND 를 반환해준다!!
+
+                //*****중요*****
+                //- 'orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))'
+                //    db로부터 가져온 Seller 객체를 감싸고 있는 Optional 객체를
+                //    여기서 '사용자 정의 매개변수명(그런데 여기서는 람다식이기도 하고, 사용자 정의 매개변수명을 설정하지 않음)'이
+                //    그 db로부터 가져온 Seller 객체를 감싸고 있는 Optional 객체를 담고(=참조하고),
+                //    그 변수를 '->' 를 통해 뒤이어 이어진 람다식 안의 action 로직에서 사용하는 과정이 되는 것임.
+
+
 //            //- 'Seller findSeller'
 //            //  : 윗 라인에서 감싼 Optional 객체 안에 db로부터 조회해서 가져온 판매자 Seller 객체가 있으면
 //            //    당연히 그 판매자 Seller 객체를 반환해서 변수 findSeller 에 담는다!
@@ -77,12 +86,30 @@ public class Optional {
 //            //    이 메소드의 반환값으로 최종 반환해준다!
 
 
+//            형태1) DB로부터 조회해서 가져온 Seller 객체를 감싸고 있는 Optional 객체를 풀어주는 코드 버전1)
 //            Optional<Seller> optionalSeller = sellerRepository.findById(sellerId);
 //            Seller findSeller = optionalSeller.orElseThrow(() ->
 //                                  new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+
+//            위의 형태1) 또는 아래 형태2) 처럼 둘 중 하나 선택해서 작성함으로써
+//            DB로부터 조회해서 가져온 Seller 객체를 감싸고 있는 Optional 객체를 풀어줘야 한다!
+
+
+//            형태2) DB로부터 조회해서 가져온 Seller 객체를 감싸고 있는 Optional 객체를 풀어주는 코드 버전2)
+//            sellerRepository.findById(sellerId)
+//                              .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 //
-//
+
+
+
 //            return findSeller;
+
+//            }
+
+
+
+
 
 
 

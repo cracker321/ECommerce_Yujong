@@ -8,6 +8,7 @@ import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
+import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.product.entity.Product;
 import yujong.ecommerce_yujong.product.mapper.ProductMapper;
@@ -27,7 +28,66 @@ public class ProductService {
     private final ProductMapper productMapper;
 
 
+
 //================================================================================================================
+
+
+    //[ DB로부터 상품 Product 조회 Read 해서 가져오기 ]
+
+    public Product findProduct(long productId){
+
+        //*****중요*****
+        //'내장 JpaRepository 의 findById()' 는 엔티티 객체를 Optional<T> 로 감싸서 반환해주기 때문에,
+        //이것을 '.orElseThrow()'를 사용해서 반드시 풀어줘야 함.
+        //아래의 형태1) 또는 형태2) 처럼 둘 중 하나 선택해서 작성함으로써
+        //DB로부터 조회해서 가져온 Product 객체를 감싸고 있는 Optional 객체를 풀어줘야 한다!
+
+        //*****중요*****
+        //- 'orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND))'
+        //    db로부터 가져온 PRODUCT 객체를 감싸고 있는 Optional 객체를
+        //    여기서 '사용자 정의 매개변수명(그런데 여기서는 람다식이기도 하고, 사용자 정의 매개변수명을 설정하지 않음)'이
+        //    그 db로부터 가져온 PRODUCT 객체를 감싸고 있는 Optional 객체를 담고(=참조하고),
+        //    그 변수를 '->' 를 통해 뒤이어 이어진 람다식 안의 action 로직에서 사용하는 과정이 되는 것임.
+
+
+        //*****중요*****
+        //형태1) DB로부터 조회해서 가져온 Product 객체를 감싸고 있는 Optional 객체를 풀어주는 코드 버전1)
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
+
+
+        //형태2) DB로부터 조회해서 가져온 Product 객체를 감싸고 있는 Optional 객체를 풀어주는 코드 버전2)
+//        Optional<Product> optionalProduct = productRepository.findById(productId);
+//        optionalProduct.orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
+
+
+        return product;
+
+
+    }
+
+
+//================================================================================================================
+
+    //[ DB에 현재 존재하는 상품 Product 인지 여부를 확인하고,
+    // 존재한다면 그 상품 Product 를 조회 Read 해서 가져와서 반환해주고,
+    // 아니라면, Optional 로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. ]
+
+    public Product findVerifiedProduct(Product product){
+
+        Optional<Product> optionalProduct = productRepository.findById(product.getProductId());
+
+        Product findProduct = optionalProduct.orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
+
+        return findProduct;
+    }
+
+
+//================================================================================================================
+
+
+
+
 
     //[ DB에 상품 Product 등록 Create ]
 
@@ -79,6 +139,8 @@ public class ProductService {
 
 
     //[ DB에 상품 Product 수정 Update ]
+
+
     //- 게시글 Board 를 수정할 때(BoardPatchDto), 상품 Product 도 수정하는 경우 있으니,
     //  그 때 사용할 목적으로 메소드 updateProduct 를 작성함.
     public Product updateProduct(Board findBoard, BoardPatchDto boardPatchDto){
@@ -126,6 +188,15 @@ public class ProductService {
         //        그 변수명을 뒤이어 이어진 람다식 내부에서 사용하여 DB로부터 조회해 온 수정시키고 싶은 상품 Product 의
         //        새로운 가격으로 넣어주는 것임.
 
+        Optional.ofNullable(boardPatchDto.getStatus())
+                .ifPresent(status -> findProduct.setStatus(status));
+        Optional.ofNullable(boardPatchDto.getCategory())
+                .ifPresent(category -> findProduct.setCategory(category));
+        Optional.ofNullable(boardPatchDto.getMainImage())
+                .ifPresent(mainImage -> findProduct.setMainImage(mainImage));
+
+
+        return productRepository.save(findProduct);
 
 
     }
@@ -137,23 +208,11 @@ public class ProductService {
 
 
 
-    //[ DB에 현재 존재하는 상품 Product 인지 여부를 확인하고, 존재한다면 그 상품 Product 를 가져와서 반환해주고,
-    //  아니라면, Optional 로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. ]
-
-    public Product findVerifiedProduct(Product product){
-
-        Optional<Product> optionalProduct = productRepository.findById(product.getProductId());
-
-        Product findProduct = optionalProduct.orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
-
-        return findProduct;
-    }
-
-
 
 
 
 //================================================================================================================
+
 
 
 
