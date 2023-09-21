@@ -29,7 +29,8 @@ public class ProductService {
 
 //================================================================================================================
 
-    //[ DB에 상품 등록 ]
+    //[ DB에 상품 Product 등록 Create ]
+
     public Product createProduct(Seller seller, BoardPostDto boardPostDto){
         //순서1) 클라이언트로부터 넘어온 Json 객체 데이터의 본문(body)를 컨트롤러 Board의 개별 각각 컨트롤러 메소드에 붙어 있는
         //      @RequestMapping, @GetMapping, @PostMapping 등을 통해 클라이언트와 연결된 URL에 링크시켜서,
@@ -77,7 +78,7 @@ public class ProductService {
 
 
 
-    //[ DB에 상품 업데이트, 수정 ]
+    //[ DB에 상품 Product 수정 Update ]
 
     public Product updateProduct(Board findBoard, BoardPatchDto boardPatchDto){
 
@@ -86,12 +87,6 @@ public class ProductService {
     //        아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. >
 
     }
-
-
-
-
-//================================================================================================================
-
 
 
 
