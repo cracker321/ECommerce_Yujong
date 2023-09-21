@@ -57,8 +57,8 @@ public class ProductService {
 
 
         //형태2) DB로부터 조회해서 가져온 Product 객체를 감싸고 있는 Optional 객체를 풀어주는 코드 버전2)
-//        Optional<Product> optionalProduct = productRepository.findById(productId);
-//        optionalProduct.orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
+        //Optional<Product> optionalProduct = productRepository.findById(productId);
+        //optionalProduct.orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
 
 
         return product;
@@ -68,6 +68,8 @@ public class ProductService {
 
 
 //================================================================================================================
+
+
 
     //[ DB에 현재 존재하는 상품 Product 인지 여부를 확인하고,
     // 존재한다면 그 상품 Product 를 조회 Read 해서 가져와서 반환해주고,
@@ -81,6 +83,8 @@ public class ProductService {
 
         return findProduct;
     }
+
+
 
 
 //================================================================================================================

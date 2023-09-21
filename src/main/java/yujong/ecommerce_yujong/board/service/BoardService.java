@@ -100,7 +100,59 @@ public class BoardService {
 
 
         //순서3) 상품 Product 업데이트
-        productService.
+        Product updatedProduct = productService.updateProduct(findBoard, boardPatchDto);
+
+        //[ Optional.ofNullalbe(인수).ifPresent(인수<> action) ]
+
+
+        //- 'Optional.ofNullable(인수)'
+        //   : DB를 조회해본 후에, 주어진 인수에 해당하는 데이터가 DB에 없는 경우(null)라면, Optional.empty() 객체를 반환하고,
+        //     이 때 반환된 Optional.empty() 객체를 예외 처리 해주기 위해,
+        //     이 반환된 객체를 참조하는 변수에 대해 그 아래 줄에 반드시 orElseThrow를 작성해줘야 한다!
+        //     만약 DB를 조회해본 후, 주어진 인수에 해당하는 데이터가 DB에 있는 경우라면,
+        //     당연히 이 때 주어진 인수를 감싸고 있는 Optional 객체를 반환해줌.
+        //     그리고 이 때도, 반환된 Optional 객체에서 Optional 을 벗겨내기 위해 orElseThrow 를 위에서와 같이 작성해줘야 함.
+
+
+        // - 'ifPresent(사용자 정의 변수명(아무거나 해도 되. a, b, c 등등) -> action)'
+        //   : Optional.ofNullable(인수)에 이어져서 호출되는 Optional 클래스의 내장 메소드이며,
+        //     Optional.ofNullable(인수)의 '인수'가 DB에 존재하는 경우 그 인수를 조회해서 가져오고,
+        //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체가 반환되는데,
+        //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 인수로 받아들이고, 여기서 '사용자 정의 변수명'이
+        //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 담고(=참조하고),
+        //     그 변수를 '->' 를 통해 뒤이어 이어진 람다식 안의 action 로직에서 사용하는 과정이 되는 것임.
+        //     만약, Optional.ofNullable(인수)의 '인수'가 DB에 존재하지 않아 null을 반환하는 경우,
+        //     당연히 뒤이어 이어지는 ifPresent 메소드에서는 아무런 동작도 이어지지 않음.
+        productService.updateProduct(findBoard, boardPatchDto){
+
+            Optional.ofNullable(boardPatchDto.getContent())
+                    .ifPresent(content -> findBoard.setContent(content));
+
+            //순서1) 'Optional.ofNullable(boardPatchDto.getContent())'
+            //      : 클라이언트로부터 받아온 Json 객체 데이터 boardPatchDto 의 getContent() 데이터 값이 DB에 있는 경우,
+            //        DB로부터 그 boardPatchDto.getContent() 의 값을 조회해서 가져와서 Optional 객체로 그 값을 감싸서 반환함.
+
+            //순서2) '.ifPresent(content -> findProduct.setContent(content))'
+            //      : 그 DB로부터 가져온 boardPatchDto.getContent() 필드의 값을 매개변수 인수로 받아들여서
+            //        그것을 '사용자 임의로 정한 변수명 content'에 담고,
+            //        그 변수명을 뒤이어 이어진 람다식 내부에서 사용하여 DB로부터 조회해 온 수정시키고 싶은 상품 Product 의
+            //        새로운 가격으로 넣어주는 것임.
+
+            Optional.ofNullable(boardPatchDto.getTitle())
+                    .ifPresent(title -> findBoard.setTitle(title));
+
+            
+        //순서4)
+        Board updatedBoard = boardRepository.save(findBoard);
+
+
+        //순서5)
+        BoardResponseDto boardResponseDto = boardMapper.productToBoardResponseDto(updatedProduct, updatedBoard);
+
+
+        return boardResponseDto;
+
+        }
 
     }
 
@@ -108,6 +160,10 @@ public class BoardService {
 
 
 //=============================================================================================================
+
+
+
+    //[ 게시글 Board 삭제 Delete ]
 
 
 
