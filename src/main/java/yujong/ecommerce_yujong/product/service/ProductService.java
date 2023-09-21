@@ -4,12 +4,18 @@ package yujong.ecommerce_yujong.product.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.entity.Board;
+import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.product.entity.Product;
 import yujong.ecommerce_yujong.product.mapper.ProductMapper;
 import yujong.ecommerce_yujong.product.repository.ProductRepository;
+
+import java.util.Optional;
+
+import static yujong.ecommerce_yujong.global.exception.ExceptionCode.PRODUCT_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Transactional(readOnly=true)
@@ -71,18 +77,60 @@ public class ProductService {
 
 
 
+    //[ DB에 상품 업데이트, 수정 ]
+
+    public Product updateProduct(Board findBoard, BoardPatchDto boardPatchDto){
+
+    //순서1) < 'ProductService.findVerifiedProduct()':
+    //        DB에 현재 존재하는 상품 Product 인지 여부를 확인하고, 존재한다면 그 상품 Product 를 가져와서 반환해주고,
+    //        아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. >
+
+    }
+
+
+
+
+//================================================================================================================
 
 
 
 
 
+//================================================================================================================
+
+
+
+    //[ DB에 현재 존재하는 상품 Product 인지 여부를 확인하고, 존재한다면 그 상품 Product 를 가져와서 반환해주고,
+    //  아니라면, Optional 로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. ]
+
+    public Product findVerifiedProduct(Product product){
+
+        Optional<Product> optionalProduct = productRepository.findById(product.getProductId());
+
+        Product findProduct = optionalProduct.orElseThrow(() -> new BusinessLogicException(PRODUCT_NOT_FOUND));
+
+        return findProduct;
+    }
 
 
 
 
 
+//================================================================================================================
 
 
+
+//================================================================================================================
+
+
+
+
+//================================================================================================================
+
+
+
+
+//================================================================================================================
 
 
 

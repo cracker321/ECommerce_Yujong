@@ -100,7 +100,7 @@ public class BoardService {
 
 
         //순서3) 상품 Product 업데이트
-
+        productService.
 
     }
 
