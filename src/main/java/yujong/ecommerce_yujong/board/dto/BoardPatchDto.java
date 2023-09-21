@@ -1,10 +1,11 @@
 package yujong.ecommerce_yujong.board.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.product.entity.Product;
+
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor

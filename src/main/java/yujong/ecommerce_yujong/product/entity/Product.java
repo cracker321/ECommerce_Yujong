@@ -1,15 +1,15 @@
 package yujong.ecommerce_yujong.product.entity;
 
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.ord.entity.Ord;
 
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 

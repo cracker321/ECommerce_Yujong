@@ -1,14 +1,14 @@
 package yujong.ecommerce_yujong.board.entity;
 
 
-import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yujong.ecommerce_yujong.comment.entity.Comment;
+import yujong.ecommerce_yujong.global.audit.Auditable;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.product.entity.Product;
-import yujong.ecommerce_yujong.review.entity.Review;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class Board extends Auditable {
 
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long boardId;
 
     @Column(length=100, nullable=false)
@@ -40,7 +40,7 @@ public class Board extends Auditable {
 
 
     //< Board(1) : Product(1). 1:1 양방향 매핑. 주인객체: Board 객체 >
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="product_id")
     //@JoinColumn(name="product_id", referencedColumnName = "prodcutId") //이렇게 @JoinColumn이 있는 필드의 상위 엔티티 클래스가 주인객체! 여기서는 Board객체가 주인!
     //'referencedColumnName' 관련해서 아래 두 링크 반드시 참조!
@@ -139,28 +139,28 @@ public class Board extends Auditable {
 
 
 
-    //< Review(N) : Board(1). N:1 양방향 매핑. 주인객체: Review >
-
-    @OneToMany(mappedBy="board", cascade=CascadeType.ALL)
-    private List<Review> reviewList = new ArrayList<>();
-
-
-    //*****중요*****
-    //리뷰의 특성 상, 따로 그 Review와 Board 간 연관관계 메소드를 작성해줄 정도로
-    //리뷰의 속성에 넣어줄 그런 중요한 건 없기 때문에,
-    //Reivew와 Board 간 연관관계 메소드를 Board 객체의 정보 내부에 넣거나 그러지 않음.
-
-
-
-    //< Review(N) : Board(1). N:1 양방향 매핑. 연관관계 편의 메소드 >
-    public void addReview(Review review){
-
-
-        reviewList.add(review);
-
-        if(review.getBoard() != null){
-            review.setBoard(this);
-        }
+//    //< Review(N) : Board(1). N:1 양방향 매핑. 주인객체: Review >
+//
+//    @OneToMany(mappedBy="board", cascade=CascadeType.ALL)
+//    private List<Review> reviewList = new ArrayList<>();
+//
+//
+//    //*****중요*****
+//    //리뷰의 특성 상, 따로 그 Review와 Board 간 연관관계 메소드를 작성해줄 정도로
+//    //리뷰의 속성에 넣어줄 그런 중요한 건 없기 때문에,
+//    //Reivew와 Board 간 연관관계 메소드를 Board 객체의 정보 내부에 넣거나 그러지 않음.
+//
+//
+//
+//    //< Review(N) : Board(1). N:1 양방향 매핑. 연관관계 편의 메소드 >
+//    public void addReview(Review review){
+//
+//
+//        reviewList.add(review);
+//
+//        if(review.getBoard() != null){
+//            review.setBoard(this);
+//        }
 
 //=============================================================================================================
 
@@ -186,4 +186,4 @@ public class Board extends Auditable {
 
 
 
-}
+

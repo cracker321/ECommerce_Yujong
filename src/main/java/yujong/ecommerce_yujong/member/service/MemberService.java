@@ -23,20 +23,34 @@ public class MemberService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Member register(MemberDto.Post dto) {
-        if (memberRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new RuntimeException("이미 가입한 이메일입니다.");
+    public Member register(MemberDto.Post request) {
+        if(memberRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists.");
         }
-        Member member = Member.builder()
-                .email(dto.getEmail())
-                .name(dto.getName())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .phone(dto.getPhone())
-                .address(dto.getAddress())
-                .role(dto.getRole())
-                .build();
+
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        Member member = new Member();
+        member.setName(request.getName());
+        member.setEmail(request.getEmail());
+        member.setPassword(encodedPassword);
+        //member.setPhone(request.getPhone());
+        member.setAddress(request.getAddress());
+        member.setRole(request.getRole());
+        // Initialize other fields like socialId, providerType, etc. as null or default
+
         return memberRepository.save(member);
     }
+
+
+    public Member updateMember(long memberId, Member member) {
+        Member existingMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("Member not found"));
+        existingMember.setName(member.getName());  // 예시: 이름 변경
+        // 다른 필드도 여기에서 변경 가능
+        return memberRepository.save(existingMember);
+    }
+
 
     public Member login(String email, String password, HttpSession session) {
         Member member = memberRepository.findByEmail(email)

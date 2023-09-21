@@ -4,6 +4,8 @@ package yujong.ecommerce_yujong.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
+import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.member.repository.SellerRepository;
 
@@ -54,7 +56,8 @@ public class SellerService {
         //  : 이 메소드 findVerifiedSeller로 외부로부터 들어온 sellerId에 해당하는 그 판매자 Seller를 DB에서 찾아 가져와서
         //    이 메소드의 반환값으로 최종 반환해준다!
         Optional<Seller> optionalSeller = sellerRepository.findById(sellerId);
-        Seller findSeller = optionalSeller.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Seller findSeller = optionalSeller
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
 
         return findSeller;
@@ -88,7 +91,15 @@ public class SellerService {
 
 //=============================================================================================================
 
+    //[ 판매자 Seller 조회 ]
+    //- 조회해서 가져오기
 
+    public Seller findSeller(long sellerId){
+
+        Seller seller = findVerifiedSeller(sellerId);
+
+        return seller;
+    }
 
 
 

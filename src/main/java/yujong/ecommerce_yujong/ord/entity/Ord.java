@@ -1,16 +1,18 @@
 package yujong.ecommerce_yujong.ord.entity;
 
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yujong.ecommerce_yujong.global.audit.Auditable;
 import yujong.ecommerce_yujong.member.entity.Customer;
 import yujong.ecommerce_yujong.product.entity.Product;
+
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @Entity
-public class Ord extends Auditable{
+public class Ord extends Auditable {
 
 
     @Id
@@ -33,7 +35,7 @@ public class Ord extends Auditable{
     private String tid;
 
     //< Ord(N) : Customer(1). N:1 양방향 매핑. 주인객체: Ord >
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="customer_id")
     private Customer customer;
 

@@ -9,6 +9,8 @@ import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.board.mapper.BoardMapper;
 import yujong.ecommerce_yujong.board.repository.BoardRepository;
+import yujong.ecommerce_yujong.global.exception.BusinessLogicException;
+import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 import yujong.ecommerce_yujong.member.entity.Seller;
 import yujong.ecommerce_yujong.member.service.SellerService;
 import yujong.ecommerce_yujong.product.entity.Product;
@@ -29,13 +31,12 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
 
-
 //=============================================================================================================
 
 
     //[ 게시글 Board 등록 Create ]
-    
-    public BoardResponseDto createBoard(BoardPostDto boardPostDto){
+
+    public BoardResponseDto createBoard(BoardPostDto boardPostDto) {
 
         //*****중요*****
         //- '메소드 BoardService.createBoard(...)'는, '컨트롤러 메소드 BoardService'에서 사용되는 메소드이기 때문에,
@@ -84,7 +85,7 @@ public class BoardService {
 
     //[ 게시글 Board 수정 Update ]
 
-    public BoardResponseDto updateBoard(long boardId, BoardPatchDto boardPatchDto){
+    public BoardResponseDto updateBoard(long boardId, BoardPatchDto boardPatchDto) {
 
 
         //순서1)
@@ -94,11 +95,15 @@ public class BoardService {
         Board findBoard = findVerifiedBoard(boardPatchDto.getBoardId());
 
 
-        //순서2)
+        //순서2) DB에 존재하는 판매자 Seller 인지 확인하고, 그 판매자 Seller 객체를 조회해서 가져옴.
+        sellerService.findSeller(findBoard.getSeller().getSellerId());
 
+
+        //순서3) 상품 Product 업데이트
 
 
     }
+
 
 
 

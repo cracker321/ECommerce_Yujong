@@ -1,12 +1,11 @@
 package yujong.ecommerce_yujong.global.error;
 
-import jakarta.validation.ConstraintViolation;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import yujong.ecommerce_yujong.global.exception.ExceptionCode;
 
+import javax.validation.ConstraintViolation;
 import java.util.List;
 import java.util.Set;
 
@@ -25,10 +24,6 @@ public class ErrorResponse {
     private ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
-    }
-    public static ErrorResponse of(BindingResult bindingResult) {
-
-        return new ErrorResponse(FieldError.of(bindingResult), null);
     }
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {

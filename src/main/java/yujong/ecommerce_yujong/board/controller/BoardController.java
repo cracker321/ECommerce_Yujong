@@ -213,7 +213,7 @@ public class BoardController {
     public ResponseEntity patchBoard(@PathVariable("board_id") long boardId,
                                      @RequestBody BoardPatchDto boardPatchDto){
 
-        boardService.updateBoard
+        boardService.updateBoard()
 
     }
 
