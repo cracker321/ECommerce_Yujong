@@ -10,6 +10,11 @@ public class Optional {
 
 
 
+    /*
+    [ Optional.ofNullalbe(인수).ifPresent(인수) ]
+
+
+     */
 
 
 //    @RequiredArgsConstructor
@@ -36,6 +41,8 @@ public class Optional {
 //            //   없으면(null 상황이면), Optional.empty() 즉, Optional 빈 객체를 반환한다.
 //            //   Optional 빈 객체를 반환하는 경우, SellerRepository를 호출한 여기 SellerService의 그 호출한 부분 바로 아래에
 //            //   이 SellerRepository를 호출한 부분 아래에 반드시 null을 처리해주는 orElseThrow을 작성해줘야 한다!!
+
+
 //            //- 'optionalSeller.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOW_FOUND));
 //            //  : 윗 라인에서 감싼 Optional 객체 안에 db로부터 조회해서 가져온 판매자 Seller 객체가 있으면
 //            //    당연히 그 판매자 Seller 객체를 반환해주고,

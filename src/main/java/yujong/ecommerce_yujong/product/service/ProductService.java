@@ -79,12 +79,22 @@ public class ProductService {
 
 
     //[ DB에 상품 Product 수정 Update ]
-
+    //- 게시글 Board 를 수정할 때(BoardPatchDto), 상품 Product 도 수정하는 경우 있으니,
+    //  그 때 사용할 목적으로 메소드 updateProduct 를 작성함.
     public Product updateProduct(Board findBoard, BoardPatchDto boardPatchDto){
 
-    //순서1) < 'ProductService.findVerifiedProduct()':
-    //        DB에 현재 존재하는 상품 Product 인지 여부를 확인하고, 존재한다면 그 상품 Product 를 가져와서 반환해주고,
-    //        아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. >
+        //순서1) < 'ProductService.findVerifiedProduct()':
+        //        DB에 현재 존재하는 상품 Product 인지 여부를 확인하고, 존재한다면 그 상품 Product 를 가져와서 반환해주고,
+        //        아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.PRODUCT_NOT_FOUND 를 발생시켜줌. >
+        Product findProduct = findVerifiedProduct(findBoard.getProduct());
+
+
+        //순서2) 상품 Prodcuct 업데이트
+
+        //< Optional.ofNullable(인수).ifPresent()
+        Optional.ofNullable(boardPatchDto.getPrice())
+                .ifPresent()
+
 
     }
 
