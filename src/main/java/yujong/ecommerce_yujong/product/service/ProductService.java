@@ -108,7 +108,7 @@ public class ProductService {
         //     Optional.ofNullable(인수)의 '인수'가 DB에 존재하는 경우 그 인수를 조회해서 가져오고,
         //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체가 반환되는데,
         //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 인수로 받아들이고, 여기서 '사용자 정의 변수명'이
-        //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 참조하고,
+        //     그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 담고(=참조하고),
         //     그 변수를 '->' 를 통해 뒤이어 이어진 람다식 안의 action 로직에서 사용하는 과정이 되는 것임.
         //     만약, Optional.ofNullable(인수)의 '인수'가 DB에 존재하지 않아 null을 반환하는 경우,
         //     당연히 뒤이어 이어지는 ifPresent 메소드에서는 아무런 동작도 이어지지 않음.
@@ -116,8 +116,15 @@ public class ProductService {
 
         Optional.ofNullable(boardPatchDto.getPrice())
                 .ifPresent(price -> findProduct.setPrice(price));
-        //순서1) 클라이언트로부터 받아온 Json 객체 데이터 boardPatchDto 의 getPrice() 데이터가 DB에 있는 경우,
-        //      그 boardPatchDto
+        //순서1) 'Optional.ofNullable(boardPatchDto.getPrice())'
+        //      : 클라이언트로부터 받아온 Json 객체 데이터 boardPatchDto 의 getPrice() 데이터 값이 DB에 있는 경우,
+        //        DB로부터 그 boardPatchDto.getPrice() 의 값을 조회해서 가져와서 Optional 객체로 그 값을 감싸서 반환함.
+
+        //순서2) '.ifPresent(price -> findProduct.setPrice(price))'
+        //      : 그 DB로부터 가져온 boardPatchDto.getPrice() 필드의 값을 매개변수 인수로 받아들여서
+        //        그것을 '사용자 임의로 정한 변수명 price'에 담고,
+        //        그 변수명을 뒤이어 이어진 람다식 내부에서 사용하여 DB로부터 조회해 온 수정시키고 싶은 상품 Product 의
+        //        새로운 가격으로 넣어주는 것임.
 
 
 
