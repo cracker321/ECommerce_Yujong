@@ -1,6 +1,9 @@
 package yujong.ecommerce_yujong.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
@@ -22,7 +25,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly=true)
 @Service
-public class BoardService {
+public class BoardService { //완료!!
 
     private final SellerService sellerService;
     private final BoardMapper boardMapper;
@@ -95,11 +98,7 @@ public class BoardService {
         Board findBoard = findVerifiedBoard(boardPatchDto.getBoardId());
 
 
-        //순서2) DB에 존재하는 판매자 Seller 인지 확인하고, 그 판매자 Seller 객체를 조회해서 가져옴.
-        sellerService.findSeller(findBoard.getSeller().getSellerId());
-
-
-        //순서3) 상품 Product 업데이트
+        //순서2) 상품 Product 업데이트
         Product updatedProduct = productService.updateProduct(findBoard, boardPatchDto);
 
         //[ Optional.ofNullalbe(인수).ifPresent(인수<> action) ]
@@ -142,11 +141,11 @@ public class BoardService {
                     .ifPresent(title -> findBoard.setTitle(title));
 
             
-        //순서4)
+        //순서3)
         Board updatedBoard = boardRepository.save(findBoard);
 
 
-        //순서5)
+        //순서4)
         BoardResponseDto boardResponseDto = boardMapper.productToBoardResponseDto(updatedProduct, updatedBoard);
 
 
@@ -166,6 +165,54 @@ public class BoardService {
     //[ 게시글 Board 삭제 Delete ]
 
 
+    public void deleteBoard(long boardId){
+
+
+        //순서1) 클라이언트 요청이 삭제하고 싶어하는 게시물이 현재 DB에 존재하는 게시물 Board 인지 확인
+        Board findBoard = findVerifiedBoard(boardId);
+
+
+        //순서2) 클라이언트가 요청이 싶어하는 게시물 안에 있는 상품 Product 가 현재 DB에 존재하는 상품 Product 인지 확인하고,
+        //      있다면 조회해서 그 상품 Product 객체를 가져오기
+        Product findProduct = productService.findVerifiedProduct(findBoard.getProduct());
+
+
+        //순서3) 게시글 Board 를 DB에서 삭제
+        boardRepository.delete(findBoard);
+
+
+        //순서4) 상품 Product 를 DB에서 삭제
+        productRepository.delete(findProduct);
+
+
+
+    }
+
+
+
+
+
+//=============================================================================================================
+
+
+
+    //[ 페이징 ]
+
+    public Page<Board> findBoards(int page, int size) {
+        return boardRepository.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()));
+    }
+
+
+
+
+    public Page<Board> findBoardsCategory(int category, int page, int size) {
+        return  boardRepository.findBoardsByProduct_Category
+                (PageRequest.of(page, size, Sort.by("boardId").descending()), category);
+    }
+
+
+
+
 
 
 
@@ -177,20 +224,13 @@ public class BoardService {
 
 
 
-//=============================================================================================================
-
-
-
-
-
-
 
 //=============================================================================================================
 
 
 
 
-    //[ DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 가져와서 반환해주고,
+    //[ DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 DB로부터 가져와서 반환해주고,
     //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.BOARD_NOT_FOUND 를 발생시켜줌. ]
     public Board findVerifiedBoard(long boardId){
 
