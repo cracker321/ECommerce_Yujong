@@ -14,6 +14,7 @@ public class Optional {
 
     [ Optional.ofNullalbe(인수).ifPresent(인수) ]
 
+
     - 'Optional.ofNullable(인수)'
       : DB를 조회해본 후에, 주어진 인수에 해당하는 데이터가 DB에 없는 경우(null)라면, Optional.empty() 객체를 반환하고,
         이 때 반환된 Optional.empty() 객체를 예외 처리 해주기 위해,
@@ -29,6 +30,8 @@ public class Optional {
          그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 인수로 받아들이고, 여기서 '사용자 정의 변수명'이
          그 db로부터 가져온 인수를 감싸고 있는 Optional 객체를 참조하고,
          그 변수를 '->' 를 통해 뒤이어 이어진 람다식 안의 action 로직에서 사용하는 과정이 되는 것임.
+         만약, Optional.ofNullable(인수)의 '인수'가 DB에 존재하지 않아 null을 반환하는 경우,
+         당연히 뒤이어 이어지는 ifPresent 메소드에서는 아무런 동작도 이어지지 않음.
 
      */
 
