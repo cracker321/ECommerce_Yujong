@@ -2,9 +2,11 @@ package yujong.ecommerce_yujong.comment.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.board.service.BoardService;
 import yujong.ecommerce_yujong.comment.entity.Comment;
 import yujong.ecommerce_yujong.comment.repository.CommentRepository;
@@ -109,7 +111,7 @@ public class CommentService {
     //- 'memberId'
     //   : 클라이언트로부터 매개변수 인자로 넘어온,
     //     그 수정하고 싶은 댓글 Comment 객체를 수정하는 회원 Member를 조회하는 데 필요한 memberId
-    public Comment updateComment(Long memberId, Comment comment){
+    public Comment updateComment(Comment comment, Long memberId){
 
         Comment foundComment = findComment(comment.getCommentId());
 
@@ -174,6 +176,21 @@ public class CommentService {
 
 
 //====================================================================================================================
+
+
+
+
+    //[ 댓글 Comment 페이징 Paging ]
+
+    public Page<Comment> findComments(int page, int size) {
+        return commentRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
+    }
+
+
+
+    public Page<Comment> findCommentByBoard(Long boardId, int page, int size) {
+        return commentRepository.findByBoard_BoardId(boardId, PageRequest.of(page, size, Sort.by("commentId").descending()));
+    }
 
 
 

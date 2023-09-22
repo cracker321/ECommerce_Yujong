@@ -1,7 +1,6 @@
 package yujong.ecommerce_yujong.global.audit;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,9 +10,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@MappedSuperclass
+@Data
+@MappedSuperclass //이거 확인하기!
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable {
     /* 생성 시간 */

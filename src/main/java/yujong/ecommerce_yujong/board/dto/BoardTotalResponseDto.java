@@ -18,9 +18,6 @@ public class BoardTotalResponseDto {
 
     private Long sellerId;
 
-    private String sellerImage;     //판매자 이미지
-
-    private String mainImage;       //게시판 썸네일 이미지
 
     private String name;            //판매자 이름
 

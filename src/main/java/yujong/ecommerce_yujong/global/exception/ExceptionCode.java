@@ -31,12 +31,8 @@ public enum ExceptionCode {
     NOT_FOUND_AUTHORITIES(400, "권한이 없는 토큰입니다."),
     LOGIN_ERROR(400, "로그인에 실패하였습니다."),
     WRONG_ACCESS(400, "잘못된 접근입니다."),
-    UNAUTHORIZED_TOKEN(400, "유효하지 않은 토큰입니다."),
-    NOT_EXPIRATION_TOKEN(400, "만료되지 않은 토큰입니다."),
     LOGOUT_MEMBER(400,"로그아웃 된 사용자입니다."),
-    UNAUTHORIZED(401, "유효하지 않은 인증입니다."),
-    FORBIDDEN(403, "접근 권한이 없습니다."),
-    NOT_FOUND_TOKEN(404, "토큰을 찾을 수 없습니다.");
+    UNAUTHORIZED(401, "유효하지 않은 인증입니다.");
 
     @Getter
     private int status;
