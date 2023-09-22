@@ -21,10 +21,6 @@ public class Seller {
     @Column
     private String introduction;
 
-    @Column
-    private String imageUrl;
-
-
 //=============================================================================================================
 
     //< Seller(1) : Member(1). 1:1 양방향 매핑. 주인객체: Seller >

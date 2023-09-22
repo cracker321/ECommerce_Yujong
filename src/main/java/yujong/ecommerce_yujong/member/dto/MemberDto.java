@@ -25,7 +25,6 @@ public class MemberDto {
         /* 주소는 공백이 아니어야 한다. */
         private String address;
 
-        /* 들어오는 값으로 Authority 부여 및 DB에 역할 저장 */
         private String role;
     }
 

@@ -13,6 +13,8 @@ import yujong.ecommerce_yujong.product.entity.Product;
 public interface BoardMapper {
     Board boardPostDtoToBoard(BoardPostDto boardPostDto);
 
+    BoardResponseDto boardToBoardResponseDto(Board board);
+
 
     @Mapping(target="status", expression="java(product.getStatus())")
     @Mapping(target="sellerId", expression="java(board.getSeller().getSellerId())")

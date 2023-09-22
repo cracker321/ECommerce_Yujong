@@ -33,7 +33,7 @@ public class Comment extends Auditable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="board_id") //이게 Board 테이블의 PK키. https://boomrabbit.tistory.com/217
     @ToString.Exclude
-    private Board baord;
+    private Board board;
 
 
 }

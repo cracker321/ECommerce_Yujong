@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
+import yujong.ecommerce_yujong.board.entity.Board;
+import yujong.ecommerce_yujong.board.mapper.BoardMapper;
 import yujong.ecommerce_yujong.board.service.BoardService;
 
 @Data
@@ -106,11 +108,15 @@ public class BoardController {
 
 
     private final BoardService boardService;
+    private final BoardMapper boardMapper;
+
+
+
 
 //=============================================================================================================
 
 
-    //< 게시글 등록 >
+    //[ 게시글 Board 등록 Create ]
     @PostMapping()
     public ResponseEntity postBoard(@RequestBody BoardPostDto boardPostDto){
 
@@ -208,12 +214,16 @@ public class BoardController {
 //=============================================================================================================
 
 
-    //< 게시글 수정 >
+    //[ 게시글 Board 수정 Update ]
+
+
     @PatchMapping("/{board_id}")
     public ResponseEntity patchBoard(@PathVariable("board_id") long boardId,
                                      @RequestBody BoardPatchDto boardPatchDto){
 
-        boardService.updateBoard()
+        BoardResponseDto response = boardService.updateBoard(boardId, boardPatchDto);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -223,6 +233,15 @@ public class BoardController {
 
 
 
+    //[ 게시글 Board 삭제 Delete ]
+
+    @DeleteMapping("/{board_id}")
+    public ResponseEntity deleteBoard(@PathVariable("board_id") long boardId){
+
+        boardService.deleteBoard(boardId);
+
+        return new ResponseEntity<>("Removal Success", HttpStatus.OK);
+    }
 
 
 
@@ -230,13 +249,26 @@ public class BoardController {
 //=============================================================================================================
 
 
+    //[ 단일 게시글 Board 조회 Read ]
 
+    @GetMapping("/{board_id}")
+    public ResponseEntity getBoard(@PathVariable("board_id") long boardId,
+                                   BoardResponseDto baordResponseDto){
 
+        Board findBoard = boardService.findVerifiedBoard(boardId);
 
+        BoardResponseDto boardResponseDto = boardMapper.boardToBoardResponseDto(findBoard);
 
+        return new ResponseEntity<>(boardResponseDto, HttpStatus.OK);
+
+    }
 
 
 //=============================================================================================================
+
+
+    //[ 전체 게시글 Board 조회 Read ]
+
 
 
 

@@ -88,7 +88,7 @@ public class BoardService { //완료!!
 
     //[ 게시글 Board 수정 Update ]
 
-    public BoardResponseDto updateBoard(long boardId, BoardPatchDto boardPatchDto) {
+    public BoardResponseDto updateBoard(BoardPatchDto boardPatchDto) {
 
 
         //순서1)
@@ -161,6 +161,37 @@ public class BoardService { //완료!!
 //=============================================================================================================
 
 
+    //[ 단일 게시글 Board 조회 Read ]
+
+
+    //[ DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 DB로부터 가져와서 반환해주고,
+    //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.BOARD_NOT_FOUND 를 발생시켜줌. ]
+
+
+
+    public Board findVerifiedBoard(long boardId){
+
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        Board findBoard = optionalBoard.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
+
+        //*****중요*****
+        //위 부분을 아래처럼 작성해줘 됨.
+        //Board findBoard = boardRepository.findById(boardId)
+        //                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
+
+
+        return findBoard;
+    }
+
+
+
+
+
+//=============================================================================================================
+
+
+
 
     //[ 게시글 Board 삭제 Delete ]
 
@@ -198,13 +229,14 @@ public class BoardService { //완료!!
 
     //[ 페이징 ]
 
+    //[ 전체 게시글 Board 페이징 Paging ]
     public Page<Board> findBoards(int page, int size) {
         return boardRepository.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()));
     }
 
 
 
-
+    //[ 카테고리별 게시글 Board 페이징 Paging ]
     public Page<Board> findBoardsCategory(int category, int page, int size) {
         return  boardRepository.findBoardsByProduct_Category
                 (PageRequest.of(page, size, Sort.by("boardId").descending()), category);
@@ -227,22 +259,6 @@ public class BoardService { //완료!!
 
 //=============================================================================================================
 
-
-
-
-    //[ DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 DB로부터 가져와서 반환해주고,
-    //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.BOARD_NOT_FOUND 를 발생시켜줌. ]
-    public Board findVerifiedBoard(long boardId){
-
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-
-        Board findBoard = optionalBoard.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
-
-        return findBoard;
-    }
-
-
-//=============================================================================================================
 
 
 

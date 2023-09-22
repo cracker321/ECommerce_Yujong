@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.comment.entity.Comment;
+import yujong.ecommerce_yujong.member.role.Role;
 
 import javax.persistence.*;
 import java.util.List;
@@ -45,13 +46,8 @@ public class Member {
 
     //# 확인하기!
     //< Authority로 일일히 확인하기 어려우니 컬럼 추가 >
-    @Column
-    private String role;
-
-    //# 확인하기!!
-    //< Security 사용하여 역할 추가 >
-    @ElementCollection(fetch= FetchType.EAGER)
-    private List<String> roles;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
 
@@ -236,14 +232,13 @@ public class Member {
 
 
     //사용자 생성자(Builder와는 별개로 만든 것임)
-    public Member(String name, String email, String password, ProviderType providerType, String role,
-                  List<String> roles, String socialId){
+    public Member(String name, String email, String password, ProviderType providerType, Role role,
+                 String socialId){
         this.name = name;
         this.email = email;
         this.password = password;
         this.providerType = providerType;
         this.role = role;
-        this.roles = roles;
         this. socialId = socialId;
 
 
