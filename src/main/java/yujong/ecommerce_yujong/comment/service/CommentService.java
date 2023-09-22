@@ -188,6 +188,8 @@ public class CommentService {
 
 
 
+    //[ 게시글 하나당 달려 있는 댓글 Comment 을 페이징 Paging 으로 조회 Read ]
+
     public Page<Comment> findCommentByBoard(Long boardId, int page, int size) {
         return commentRepository.findByBoard_BoardId(boardId, PageRequest.of(page, size, Sort.by("commentId").descending()));
     }

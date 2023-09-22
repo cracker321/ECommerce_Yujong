@@ -74,6 +74,25 @@ public class CommentController {
 
     < 순서1) CommentController 클래스의 메소드 getComment 에서 페이징 처리를 시작함 >
 
+
+
+    //댓글 Comment 조회 Read
+
+    @GetMapping("/{board-Id}")
+    public ResponseEntity getComment(@PathVariable("board-Id") @Positive Long boardId,
+                                     @Positive @RequestParam int page,
+                                     @Positive @RequestParam int size) {
+
+        Page<Comment> commentPage = commentService.findCommentByBoard(boardId,page - 1, size);
+
+        List<Comment> commentList = commentPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(commentMapper.commentToCommentResponseDtos(commentList),
+                        commentPage), HttpStatus.OK);
+    }
+
+
     - 'Page<Comment> commentPage = commentService.findCommentByBoard(boardId,page - 1, size);'
       : 클라이언트가 전달하여 매개변수 인자로 들어온 boardId를 통해, 클라이언트가 찾고자 하는 게시글 Board 를 찾고,
         그 게시글 Board에 달려 있는 댓글들을 '페이지 단위, 즉 Page 객체에 담아서(Page 객체 단위로)' 가져옴.
@@ -95,7 +114,10 @@ public class CommentController {
     < 순서2) CommentService 클래스의 메소드 findCommentByBoard 에서 댓글 페이징 처리 >
 
 
+
+
     # CommentService의 메소드 findCommentByBoard
+    // 게시글 하나당 달려 있는 댓글 Comment 을 페이징 Paging 으로 조회 Read
 
     public Page<Comment> findCommentByBoard(Long boardId, int page, int size) {
         return commentRepository.findByBoard_BoardId(boardId, PageRequest.of(page, size, Sort.by("commentId").descending()));
@@ -135,8 +157,11 @@ public class CommentController {
     < 순서3) CommentRepository 에서 댓글 페이징 처리 >
 
 
-    #
+    # 레펏 CommentRepository 의 메소드(아래는 사용자 정의 쿼리메소드) findByBoard_BoardId
+
     public Page<Comment> findByBoard_BoardId(Long boardId, Pageable pageable);
+
+
 
     *****중요*****
     - 사용자 정의 쿼리 메소드임. SQL문으로 바꾸면 아래와 같음.
