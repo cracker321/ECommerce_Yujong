@@ -102,7 +102,7 @@ public class 페이징Paging {
 
 
     *****중요*****
-    - 사용자 정의 쿼리 메소드임. SQL문으로 바꾸면 아래와 같음.
+    - 사용자 정의 쿼리 메소드임. SQL문으로 바꾸면 아래와 같음. 쿼리메소드.
       SELECT * FROM comment WHERE board_id = ? ORDER BY comment_id DESC LIMIT ?, ?
 
       예를 들어,
