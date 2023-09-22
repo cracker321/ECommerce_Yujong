@@ -36,7 +36,9 @@ public class CommentService {
 
     //[ 댓글 Comment 조회 Read ]
 
-
+    //클라이언트로부터 매개변수 인자로 넘어온 commentId
+    //- 'commentId': 클라이언트로부터 매개변수 인자로 넘어온,
+    //               클라이언트가 DB에서 조회해서 가져오고 싶어하는 댓글 Comment 를 조회하는 데 필요한 commentId
     public Comment findComment(Long commentId){
 
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
@@ -53,6 +55,8 @@ public class CommentService {
     //[ 댓글 Comment 등록 Create ]
 
     //클라언트로부터 매개변수 인자로 넘어온 댓글 Comment 작성 Create 요청
+    //- 'Comment comment': 클라이언트로부터 매개변수 인자로 넘어온, 클라이언트가 새롭게 작성해서 DB에 저장시키고 싶어하는 댓글 Comment 객체
+    //- 'memberId': 그 새롭게 작성해서 DB에 저장시키고 싶어하는 댓글 Comment 객체를 작성한 회원 Member를 조회하는 데 필요한 commentId
     public Comment createComment(Comment comment, long memberId){
 
         //댓글 Comment 를 작성하려고 하는 회원 Member 가 현재 DB에 존재하는 회원 Member 인지 여부 확인
@@ -68,7 +72,7 @@ public class CommentService {
 
 
     //[ 클라이언트로부터 매개변수 인자로 넘어온 해당 댓글 Comment 를 작성하려고 하는 회원 Member가 DB에 존재하는 회원 Member 인지 여부만 그냥 확인하는 것 ]
-
+    //- 'Comment comment': 클라이언트가 새롭게 작성해서 DB에 저장시키고 싶어하는 댓글 Comment 객체
     private void verifiedMember(Comment comment){
 
         commentRepository.findById(comment.getMember().getMemberId());
@@ -79,8 +83,11 @@ public class CommentService {
     }
 
 
-    //[ 클라언트로부터 매개변수 인자로 넘어온 해당 댓글 Comment가 달려 있는 게시글 Board가 DB에 존재하는 게시글 Board 인지 여부만 그냥 확인하는 것 ]
 
+
+    //[ 클라언트로부터 매개변수 인자로 넘어온 해당 댓글 Comment가 달려 있는 게시글 Board가 DB에 존재하는 게시글 Board 인지 여부만 그냥 확인하는 것 ]
+    //- 'Comment comment': 클라이언트로부터 매개변수 인자로 넘어온, 클라이언트가 새롭게 작성해서 DB에 저장시키고 싶어하는 댓글 Comment 객체.
+    //- 'memberId': 그 새롭게 작성해서 DB에 저장시키고 싶어하는 댓글 Comment 객체를 작성한 회원 Member를 조회하는 데 필요한 commentId
     private void verifiedBoard(Comment comment){
 
         commentRepository.findById(comment.getBoard().getBoardId());
@@ -96,8 +103,12 @@ public class CommentService {
 
     //[ 댓글 Comment 수정 Update ]
 
-    //클라이언트로부터 매개변수 인자로 넘어온 댓글 Comment 수정을 희망하는 회원 아이디 memberId 와
-    //수정할 내용이 담긴 댓글 Comment
+    //- 'Comment comment'
+    //   : 클라이언트로부터 매개변수 인자로 넘어온,
+    //     클라이언트가 기존 댓글을 새롭게 수정해서 DB에 저장시키고 싶어하는 대상이 되는 수정 댓글 Comment 객체
+    //- 'memberId'
+    //   : 클라이언트로부터 매개변수 인자로 넘어온,
+    //     그 수정하고 싶은 댓글 Comment 객체를 수정하는 회원 Member를 조회하는 데 필요한 memberId
     public Comment updateComment(Long memberId, Comment comment){
 
         Comment foundComment = findComment(comment.getCommentId());
@@ -107,7 +118,12 @@ public class CommentService {
         //댓글 Comment의 수정 희망자 memberId 가 같은지 확인
 
 
+        Optional.ofNullable(comment.getContext()).ifPresent(context -> foundComment.setContext(context));
+        //클라이언트로부터 매개변수 인자로 넘어온 댓글 Comment 수정 내용 Context 을 이제
+        //DB에 있던 기존 Comment에 반영해서 댓글 내용을 수정함.
 
+
+        return commentRepository.save(comment);
 
 
     }
@@ -130,6 +146,31 @@ public class CommentService {
 //====================================================================================================================
 
 
+    //[ 댓글 Comment 삭제 Delete ]
+
+
+    //- 'memberId': 클라이언트로부터 매개변수 인자로 넘어온, 현재 DB에 존재하는 댓글 삭제하고 싶어하는 회원 아이디 memberId
+    //- 'commentId'
+    //  : 클라이언트로부터 매개변수 인자로 넘어온, 현재 DB에 존재하며 클라이언트가 삭제시키고 싶어하는 대상이 되는 Comment를 조회하는 데
+    //    필요한 commentId
+    public void deleteComment(Long memberId, Long commentId){
+
+        Comment foundComment = findComment(commentId);
+        //현재 DB에 존재하며, 클라이언트가 삭제시키고 싶어하는 댓글 Comment 객체를 DB로부터 조회해서 가져옴.
+
+        Long originalCommenterId = foundComment.getMember().getMemberId();
+        //삭제 대상이 되는 Comment 객체를 작성하는 원 작성자 회원의 아이디 memberId 를 조회해서 가져옴.
+
+        verifyWriter(originalCommenterId, memberId);
+        //삭제 대상이 되는 Comment 객체의 원 작성자 originalCommenterId 와
+        //클라이언트로부터 매개변수 인자로 넘어온, 현재 DB에 존재하며 클라이언트가 삭제시키고 싶어하는 회원 아이디 memberId 가
+        //일치하는 여부를 확인.
+
+
+        commentRepository.delete(foundComment);
+
+
+    }
 
 
 //====================================================================================================================
