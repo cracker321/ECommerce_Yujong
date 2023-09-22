@@ -1,79 +1,12 @@
-package yujong.ecommerce_yujong.comment.controller;
+package yujong.ecommerce_yujong.참고사항;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import yujong.ecommerce_yujong.comment.dto.CommentPatchDto;
-import yujong.ecommerce_yujong.comment.dto.CommentPostDto;
-import yujong.ecommerce_yujong.comment.entity.Comment;
-import yujong.ecommerce_yujong.comment.mapper.CommentMapper;
-import yujong.ecommerce_yujong.comment.service.CommentService;
-import yujong.ecommerce_yujong.global.response.MultiResponseDto;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
-import java.util.List;
-
-@Slf4j
-@RestController
-@RequestMapping("comments")
-@AllArgsConstructor
-@Validated
-public class CommentController {
-
-    private final CommentService commentService;
-    private final CommentMapper commentMapper;
-
-
-//====================================================================================================================
+public class 페이징Paging {
 
 
 
-    //[ 댓글 Comment 등록 Create ]
-
-
-    @PostMapping
-    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto) {
-
-        Comment comment = commentService.createComment(
-                commentMapper.commentPostDtoToComment(commentPostDto), commentPostDto.getMemberId());
-
-        return new ResponseEntity<>((commentMapper.commentToCommentResponseDto(comment)), HttpStatus.CREATED);
-    }
-
-
-//====================================================================================================================
-
-
-    //[ 댓글 Comment 조회 Read ]
-
-
-    @GetMapping("/{board-Id}")
-    public ResponseEntity getComment(@PathVariable("board-Id") @Positive Long boardId,
-                                     @Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
-
-        Page<Comment> commentPage = commentService.findCommentByBoard(boardId,page - 1, size);
-
-        List<Comment> commentList = commentPage.getContent();
-
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(commentMapper.commentToCommentResponseDtos(commentList),
-                        commentPage), HttpStatus.OK);
-    }
-
-
-        /*
+            /*
 
     [ 댓글 Comment 페이징 Paging ]
-
-
-
-
 
     < 순서1) CommentController 클래스의 메소드 getComment 에서 페이징 처리를 시작함 >
 
@@ -113,8 +46,9 @@ public class CommentController {
 
 
 
-    < 순서2) CommentService 클래스의 메소드 findCommentByBoard 에서 댓글 페이징 처리 >
 
+
+    < 순서2) CommentService 클래스의 메소드 findCommentByBoard 에서 댓글 페이징 처리 >
 
     # CommentService의 메소드 findCommentByBoard
     // 게시글 하나당 달려 있는 댓글 Comment 을 페이징 Paging 으로 조회 Read
@@ -149,6 +83,8 @@ public class CommentController {
         |
         |-- direction (오름차순/내림차순)
         |-- properties (정렬 기준이 되는 필드들)
+
+
 
 
 
@@ -202,6 +138,7 @@ public class CommentController {
 
 
     < 순서4) PageInfo 클래스 생성 >
+
     - JPA 내장 클래스 아님!! 개발자가 직접 만든 클래스임!
 
     @Data
@@ -227,6 +164,10 @@ public class CommentController {
             한 페이지당 데이터 개수(page.getSize())
             전체 데이터 수(page.getTotalElements())
             전체 페이지 수(page.getTotalPages())
+
+
+
+
 
 
 
@@ -266,44 +207,7 @@ public class CommentController {
      */
 
 
-//====================================================================================================================
 
-
-
-    //[ 댓글 Comment 수정 Update ]
-
-
-    @PatchMapping("/{comment-Id}")
-    public ResponseEntity patchComment(@PathVariable("comment-Id") @Positive Long commentId,
-                                       @Valid @RequestBody CommentPatchDto commentPatchDto) {
-        commentPatchDto.setCommentId(commentId);
-        Comment comment = commentService.updateComment(
-                commentMapper.commentPatchDtoToComment(commentPatchDto), commentPatchDto.getMemberId());
-
-        return new ResponseEntity<>(commentMapper.commentToCommentResponseDto(comment), HttpStatus.OK);
-    }
-
-
-
-//====================================================================================================================
-
-
-    //[ 댓글 Comment 삭제 Delete ]
-
-    @DeleteMapping("/{comment-Id}")
-    public ResponseEntity deleteComment(@PathVariable("comment-Id") @Positive Long commentId,
-                                        @Positive @RequestParam Long memberId) {
-
-
-        commentService.deleteComment(commentId, memberId);
-
-        String message = "Success!";
-
-        return ResponseEntity.ok(message);
-    }
-
-
-//====================================================================================================================
 
 
 
