@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
 @Data
-@MappedSuperclass //이거 확인하기!
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable {
     /* 생성 시간 */

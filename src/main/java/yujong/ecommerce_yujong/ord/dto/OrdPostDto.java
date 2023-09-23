@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrdPostDto {
+public class OrdPostDto { // 주문 내역 그 자체 조회
 
     private Long customerId;
 

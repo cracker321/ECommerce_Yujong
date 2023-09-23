@@ -11,7 +11,7 @@ import yujong.ecommerce_yujong.member.entity.Member;
 import yujong.ecommerce_yujong.member.role.Role;
 import yujong.ecommerce_yujong.member.service.MemberService;
 
-/* 공통의 회원 클래스 컨트롤러 : 회원가입, 로그인, 회원 탈퇴 등을 구현 */
+/* 공통의 회원 클래스 컨트롤러 : 회원가입, 회원탈퇴 등을 구현 */
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -20,12 +20,9 @@ public class MemberController {
     private final MemberService memberService;
 
 
-//=====================================================================================================================
 
 
-
-    //[ 회원 Member 가입 Create ]
-
+    /* 회원 Member 가입 Create */
     @PostMapping("/members/signup")
     public ResponseEntity signup(@RequestBody LoginRequestDto loginRequestDto,
                                  LoginResponseDto loginResponseDto,
@@ -36,16 +33,20 @@ public class MemberController {
         member.setPassword(loginRequestDto.getPassword());
 
         if (loginRequestDto.getRole() == Role.CUSTOMER) {
-            // 고객 Custoemr 회원가입 로직
+
+            /* 고객 Custoemr 회원가입 로직 */
             member.setRole(Role.CUSTOMER);
         } else if (loginRequestDto.getRole() == Role.SELLER) {
-            // 판매자 Seller 회원가입 로직
+
+            /* 판매자 Seller 회원가입 로직 */
             member.setRole(Role.SELLER);
         } else {
-            return ResponseEntity.badRequest().body(null);  // 잘못된 Role인 경우
+
+            /* 잘못된 Role인 경우 */
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        // 회원가입 로직 실행
+        /* 회원가입 로직 실행 */
         Member createdMember = memberService.createMember(member);
 
         loginResponseDto.setMemberId(createdMember.getMemberId());
@@ -59,12 +60,9 @@ public class MemberController {
 
 
 
-//=====================================================================================================================
 
 
-
-
-    //[ 회원 Member 삭제 Delete ]
+    /* 회원 Member 삭제 Delete */
     @DeleteMapping("/members/{member_id}")
     public ResponseEntity deleteMember(@PathVariable("member_id") Long memberId) {
 
@@ -72,11 +70,5 @@ public class MemberController {
 
         return new ResponseEntity<>("Member removed", HttpStatus.OK);
     }
-
-
-
-//=====================================================================================================================
-
-
 
 }

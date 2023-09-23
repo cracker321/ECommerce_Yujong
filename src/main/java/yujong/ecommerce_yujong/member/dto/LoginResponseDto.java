@@ -10,8 +10,13 @@ import yujong.ecommerce_yujong.member.role.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponseDto {
+
     private Long memberId;
+
     private String email;
+
     private String name;
+
     private Role role;
+
 }

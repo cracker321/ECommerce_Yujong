@@ -24,7 +24,6 @@ public class Seller {
 
 
 
-
     /* Seller(1) : Member(1). 1:1 양방향 매핑. 주인객체: Seller. 판매자 - 회원 일대일 연관 관계 : 회원 참조 */
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="member_id")

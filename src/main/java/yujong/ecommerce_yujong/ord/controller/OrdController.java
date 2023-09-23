@@ -29,6 +29,7 @@ public class OrdController {
 
 
 
+    /* 주문 Ord 생성 Create */
     @PostMapping
     public ResponseEntity postOrd(@RequestBody @Valid OrdPostDto ordPostDto){
 
@@ -39,7 +40,7 @@ public class OrdController {
 
 
 
-
+    /* 주문 Ord 삭제 Delete */
     @DeleteMapping("/{order_id}")
     public ResponseEntity deleteOrd(@PathVariable("order_id") @Positive Long ordId){
 
@@ -49,6 +50,9 @@ public class OrdController {
 
     }
 
+
+
+    /* 주문 Ord 조회 Read */
     @GetMapping("/{order_id}")
     public ResponseEntity getOrd(@PathVariable("order_id") @Positive Long ordId){
         Ord ord= ordService.findVerifiedOrd(ordId);
@@ -57,5 +61,7 @@ public class OrdController {
         log.info("redirect 가 전송됨");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+
 
 }

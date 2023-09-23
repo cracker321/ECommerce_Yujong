@@ -10,7 +10,11 @@ import yujong.ecommerce_yujong.member.role.Role;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequestDto {
+
     private String email;
+
     private String password;
+
     private Role role;
+
 }
