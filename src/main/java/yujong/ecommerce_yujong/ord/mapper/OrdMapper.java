@@ -8,8 +8,6 @@ import yujong.ecommerce_yujong.ord.dto.OrdResponseDto;
 import yujong.ecommerce_yujong.ord.entity.Ord;
 import yujong.ecommerce_yujong.product.entity.Product;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
 public interface OrdMapper {
 
@@ -66,5 +64,4 @@ public interface OrdMapper {
         return ordResponseDto;
 
     }
-    List<OrdCustomerResponseDto> ordToOrdCustomerResponseDtos(List<Ord> ords);
 }

@@ -3,9 +3,6 @@ package yujong.ecommerce_yujong.ord.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yujong.ecommerce_yujong.board.entity.Board;
@@ -38,19 +35,35 @@ public class OrdService {
     private final BoardRepository boardRepository;
     private final CustomerService customerService;
 
-    //주문은 Customer 만 할 수 있고, 판매자는 내역만 조회로 가져간다
+
+
+
+
+    /* 주문 Ord 조회 Read */
+    @Transactional
+    public Ord findVerifiedOrd(Long ordId){
+        Optional<Ord> optionalOrd = ordRepository.findById(ordId);
+        Ord findOrd = optionalOrd.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND));
+        return findOrd;
+    }
+
+
+
+
+    /* 주문 Ord 생성 Create */
+    /* 주문은 Customer 만 할 수 있고, 판매자는 내역만 조회로 가져감 */
     public OrdResponseDto createOrd(OrdPostDto ordPostDto) {
 
-        //판매자 존재 여부 확인
+        /* 고객 Customer 존재 여부 확인 */
         Customer findCustomer = customerService.findCustomer(ordPostDto.getCustomerId());
 
-        //게시글 존재 여부 확인
+        /* 게시글 Board 존재 여부 확인 */
         Board findBoard = boardService.findVerifiedBoard(ordPostDto.getBoardId());
 
-        //상품 존재 여부 확인
+        /* 상품 존재 여부 확인 */
         Product findProduct = productService.findProduct(findBoard.getProduct().getProductId());
 
-        //주문 시 재고가 없다면
+        /* 주문 시 재고가 없다면 */
         if(findProduct.getLeftStock() == 0){
 
             findProduct.setStatus(Product.ProductStatus.PRD_SOLDOUT);
@@ -58,20 +71,23 @@ public class OrdService {
 
             throw new BusinessLogicException(ExceptionCode.PRODUCT_SOLDOUT);
         }
-        //재고가 있다면
+
+
+        /* 재고가 있다면 */
         else{
             Ord ord = ordMapper.ordPostDtoToOrd(findCustomer,findProduct, ordPostDto);
 
-            //재고 < 수량
+            /* 재고 < 수량 인 경우 */
             if(findProduct.getLeftStock() < ord.getQuantity()){
                 throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_ENOUGH);
             }
-            //재고 > 수량
-            //주문 등록 시, 재고에서 수량만큼 빼기
+
+            /* 재고 > 수량 인 경우 */
+            /* 주문 등록 시, 재고에서 수량만큼 빼기 */
             findProduct.setLeftStock(findProduct.getLeftStock() - ord.getQuantity());
             productRepository.save(findProduct);
 
-            //ord DB 저장
+            /* ord DB 저장 */
             ord.setProduct(productService.findProduct(findBoard.getBoardId()));
             ord.setCustomer(customerService.findVerifiedCustomer(findCustomer.getCustomerId()));
             ordRepository.save(ord);
@@ -81,26 +97,13 @@ public class OrdService {
         }
     }
 
+
+
+    /* 주문 Ord 삭제 Delete */
     @Transactional
     public void deleteOrd(Long ordId){
         Ord foundOrd = findVerifiedOrd(ordId);
         ordRepository.delete(foundOrd);
     }
 
-    @Transactional
-    public Ord findVerifiedOrd(Long ordId){
-        Optional<Ord> optionalOrd = ordRepository.findById(ordId);
-        Ord findOrd = optionalOrd.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND));
-        return findOrd;
-    }
-
-    @Transactional
-    public Page<Ord> findCustomerOrd(Long customerId, int page, int size){
-        return ordRepository.findByCustomer_CustomerId(customerId, PageRequest.of(page, size, Sort.by("ordId").descending()));
-    }
-
-    @Transactional
-    public Page<Board> findSellerOrd(Long sellerId, int page, int size){
-        return boardRepository.findBySeller_SellerId(sellerId, PageRequest.of(page, size, Sort.by("boardId").descending()));
-    }
 }

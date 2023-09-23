@@ -31,16 +31,15 @@ public class Ord extends Auditable {
     @Column
     private int totalPrice;
 
-    @Column
-    private String tid;
 
-    //< Ord(N) : Customer(1). N:1 양방향 매핑. 주인객체: Ord >
+
+    /* Ord(N) : Customer(1). N:1 양방향 매핑. 주인객체: Ord. 주문 - 고객 다대일 연관 관계 : 상품 참조 */
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="customer_id")
     private Customer customer;
 
 
-    //< Ord(1) : Product(1): N:1 양방향 매핑. 주인객체: Ord >
+    /* Ord(1) : Product(1): N:1 양방향 매핑. 주인객체: Ord. 주문 - 상품 다대일 연관 관계 : 상품 참조 */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="product_id")
     private Product product;
@@ -53,7 +52,6 @@ public class Ord extends Auditable {
 
 
 
-    //
     public enum OrdStatus{
 
         ORD_REQUEST(1, "주문 요청"),

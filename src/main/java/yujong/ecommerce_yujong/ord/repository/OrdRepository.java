@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface OrdRepository  extends JpaRepository<Ord,Long> {
     Page<Ord> findByCustomer_CustomerId(Long customerId, Pageable pageable);
-    List<Ord> findByCustomer_CustomerId(long customerId);
 }
