@@ -41,7 +41,6 @@ dependencies {
 
     /* DB */
     implementation 'mysql:mysql-connector-java'
-    implementation 'com.h2database:h2'
 
     /* Test + Rest Docs */
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
@@ -54,17 +53,9 @@ dependencies {
     /* OAuth2*/
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-    /* jwt */
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
     /* AOP */
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-
-    /* Mail */
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 
 }
