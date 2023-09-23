@@ -1,9 +1,10 @@
 package yujong.ecommerce_yujong.comment.dto;
 
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.NotNull;
+
 
 @Data
 @NoArgsConstructor
