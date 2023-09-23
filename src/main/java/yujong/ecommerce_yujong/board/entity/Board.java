@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data //그러나, 사실 엔티티에 '@Setter'를 넣어주는 것은 지양해야 함
+@Data
 @NoArgsConstructor
 @Table(name="board")
 @Entity
@@ -30,18 +30,14 @@ public class Board extends Auditable {
     private String content;
 
 
-//=============================================================================================================
 
-
-    //< Board(1) : Product(1). 1:1 양방향 매핑. 주인객체: Board 객체 >
+    /* Board(1) : Product(1). 1:1 양방향 매핑. 주인객체: Board 객체. 게시판 - 상품 일대일 연관 관계 : 상품 참조 */
     @OneToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="product_id")
     private Product product;
 
 
-
-    //< Board(1) : Product(1). 1:1 양방향 매핑. 연관관계 편의 메소드 > 교재 p190~
-    //- set이 붙는 연관관계 편의 메소드는 기본적으로 Setter 세터와 형식이 같음!!
+    /* Board(1) : Product(1). 1:1 양방향 매핑. 주인객체: Board 객체. 게시판 - 상품 연관관계 편의 메소드 */
     public void setProduct(Product product){
 
         if(this.product != null){
@@ -56,31 +52,20 @@ public class Board extends Auditable {
     }
 
 
-//=============================================================================================================
 
 
-
-    //< Board(N) : Seller(1). N:1 양방향 매핑. 주인객체: Board >
-
+    /*  Board(N) : Seller(1). N:1 양방향 매핑. 주인객체: Board. 게시판 - 판매자 다대일 연관 관계 : 판매자 참조 */
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="seller_id")//'referencedColumnName' 관련해서 아래 두 링크 반드시 참조!
+    @JoinColumn(name="seller_id")
     private Seller seller;
 
 
 
 
 
-//=============================================================================================================
-
-
-
-    //< Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment >
+    /* Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment. 판매 댓글 - 판매자 다대일 연관 관계 : 판매자 참조 */
     @OneToMany(mappedBy="board", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
-
-
-
-//=============================================================================================================
 
 
 

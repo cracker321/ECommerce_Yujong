@@ -22,14 +22,16 @@ public class Comment extends Auditable {
     @Column(nullable=false)
     private String context;
 
-    //< Comment(N) : Member(1). N:1 양방향 매핑. 주인객체: Comment >
+    /* Comment(N) : Member(1). N:1 양방향 매핑. 주인객체: Comment. 댓글 - 회원 다대일 연관 관계 : 소비자 참조 */
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="member_id") //이게 Member 테이블의 PK키. https://boomrabbit.tistory.com/217
     @ToString.Exclude
     private Member member;
 
 
-    //< Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment >
+
+
+    /* Comment(N) : Board(1). N:1 양방향 매핑. 주인객체: Comment. 댓글 - 게시판 다대일 연관 관계 : 판매자 참조 */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="board_id") //이게 Board 테이블의 PK키. https://boomrabbit.tistory.com/217
     @ToString.Exclude

@@ -14,8 +14,6 @@ public class BoardPostDto {
     
     
     private Long sellerId;
-    
-    private String mainImage; //게시판 썸네일 이미지
 
     @NotBlank
     private String title; //게시글 Board 제목
@@ -28,8 +26,5 @@ public class BoardPostDto {
 
     @NotBlank
     private int stock; //상품 Product 재고
-
-    @NotBlank
-    private int category; //상품 Product 분류 카테고리
 
 }

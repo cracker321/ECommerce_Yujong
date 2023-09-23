@@ -18,7 +18,6 @@ public class BoardTotalResponseDto {
 
     private Long sellerId;
 
-
     private String name;            //판매자 이름
 
     private String title;           //게시글 제목
@@ -26,11 +25,5 @@ public class BoardTotalResponseDto {
     private int price;              //상품 가격
 
     private int leftStock;          //잔여 재고
-
-    private int category;           //상품분류
-
-    private double reviewAvg;      //별점의 평균
-
-    private int reviewNum;          //리뷰 갯수
 
 }

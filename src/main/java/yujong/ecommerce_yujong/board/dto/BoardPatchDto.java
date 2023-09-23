@@ -16,9 +16,6 @@ public class BoardPatchDto {
     private Long boardId;
 
     @NotBlank
-    private String mainImage; //게시판 썸네일 이미지
-
-    @NotBlank
     private String title;
 
     @NotBlank

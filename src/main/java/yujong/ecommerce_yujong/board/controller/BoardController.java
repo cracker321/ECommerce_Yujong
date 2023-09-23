@@ -22,7 +22,7 @@ import java.util.List;
 @Data
 @RequestMapping("/boards")
 @RequiredArgsConstructor
-@RestController //@Controller + @ResponseBody
+@RestController
 public class BoardController {
 
 
@@ -32,10 +32,8 @@ public class BoardController {
 
 
 
-//=============================================================================================================
 
-
-    //[ 게시글 Board 등록 Create ]
+    /* 게시글 Board 등록 Create */
     @PostMapping()
     public ResponseEntity postBoard(@RequestBody BoardPostDto boardPostDto){
 
@@ -49,12 +47,7 @@ public class BoardController {
 
 
 
-//=============================================================================================================
-
-
-    //[ 게시글 Board 수정 Update ]
-
-
+    /* 게시글 Board 수정 Update */
     @PatchMapping("/{board_id}")
     public ResponseEntity patchBoard(@PathVariable("board_id") long boardId,
                                      @RequestBody BoardPatchDto boardPatchDto){
@@ -67,12 +60,8 @@ public class BoardController {
 
 
 
-//=============================================================================================================
 
-
-
-    //[ 게시글 Board 삭제 Delete ]
-
+    /* 게시글 Board 삭제 Delete */
     @DeleteMapping("/{board_id}")
     public ResponseEntity deleteBoard(@PathVariable("board_id") long boardId){
 
@@ -84,11 +73,9 @@ public class BoardController {
 
 
 
-//=============================================================================================================
 
 
-    //[ 단일 게시글 Board 조회 Read ]
-
+    /* 단일 게시글 Board 조회 Read */
     @GetMapping("/{board_id}")
     public ResponseEntity getBoard(@PathVariable("board_id") long boardId,
                                    BoardResponseDto baordResponseDto){
@@ -102,11 +89,10 @@ public class BoardController {
     }
 
 
-//=============================================================================================================
 
 
-    //[ 전체 게시글 Board 조회 Read ]
 
+    /* 전체 게시글 Board 조회 Read */
     @GetMapping()
     public ResponseEntity GetBoards(@Positive @RequestParam int page,
                                     @Positive @RequestParam int size) {
