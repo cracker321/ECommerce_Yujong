@@ -89,16 +89,6 @@ public class MemberService implements UserDetailsService {
         if (member.getRole() == Role.SELLER) {
 
             member.setSeller(new Seller());
-            //여기에 회원가입하고자 하는 판매자 Selelr 에 대한 추가 회원 정보를 입력할 수 있음.
-            //이는 판매자 Seller 엔티티 클래스 내부에 있는 필드를 따라감.
-            //만약, 판매자 Seller 엔티티 클래스 내부에 '필드 storeName', '필드 sellerGrade'와 같은 것이 있다면,
-            //바로 여기에 아래처럼 추가할 수 있음.
-            //e.g) seller.setStoreName("새마을식당");
-            //     seller.setSellerGrade(1); //판매자 등급을 초기 등급인 1 등급으로 설정.
-            //기본적으로는 새로운 회원이 가입할 때 입력한 Member 객체 내부의 필드 정보들이
-            //이 메소드 createMember 의 인수로 넘어오고, 그 넘어온 정보들을 일단 기본적으로 이 회원을 판매자 Seller 로 인정해서
-            //이 신규 가입 회원 Memember를 '판매자 Seller'로서 인정하고 신규회원가입 때 입력한 정보를
-            //'판매자 Seller' 로서의 기본 정보로 DB에 넣는 것임.
             member.getSeller().setIntroduction("안녕하세요, " + member.getName() + "입니다.");
 
 
@@ -151,56 +141,6 @@ public class MemberService implements UserDetailsService {
 
        memberRepository.delete(member);
     }
-
-
-
-
-
-//=====================================================================================================================
-
-
-
-//    //[ 회원 Member 로그인 ]
-//
-//    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-//        Member member = memberRepository.findByEmail(loginRequestDto.getEmail())
-//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//
-//        if (!passwordEncoder.matches(loginRequestDto.getPassword(), member.getPassword())) {
-//            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-//        }
-//
-//
-//        return new LoginResponseDto(
-//                member.getMemberId(),
-//                member.getEmail(),
-//                member.getName(),
-//                member.getRole()
-//        );
-//    }
-
-
-
-//=====================================================================================================================
-
-
-
-//    //[ 회원 Member 로그아웃 logout ]
-//    public void logout(HttpSession session) {
-//        session.invalidate(); // 세션 초기화
-//    }
-
-
-
-
-
-//=====================================================================================================================
-
-
-
-
-
-//=====================================================================================================================
 
 }
 

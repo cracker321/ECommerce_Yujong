@@ -11,15 +11,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/ecommerce_yujong?serverTimezone=Asia/Seoul
     # ? mysql? '??? root' ??? ?? DB? ?? 'security'?? ??? DB? ?????? ???.
     username: root
     password: 1234
-  mvc:
-    #?? ?? 'mvc:'~'suffix:'??? ????? ??? ?.
-    view:
-      prefix: /templates/
-      suffix: .mustache
   jpa:
     show-sql: true
     hibernate:

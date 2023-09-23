@@ -1,23 +1,21 @@
 package yujong.ecommerce_yujong.board.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BoardForSellerMyPageDto {
+    private long boardId;
 
-    private Long boardId;
+    private String title;               //게시글 제목
 
-    private String title;
+    private int stock;                  //초기 상품 재고
 
-    private int leftStock;
+    private int leftStock;              //잔여 재고
 
-    private LocalDate createdAt;
+    private LocalDate createdAt;    //게시글 생성 시간
 }
