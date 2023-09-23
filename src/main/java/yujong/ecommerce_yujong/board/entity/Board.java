@@ -37,6 +37,8 @@ public class Board extends Auditable {
     private Product product;
 
 
+
+
     /* Board(1) : Product(1). 1:1 양방향 매핑. 주인객체: Board 객체. 게시판 - 상품 연관관계 편의 메소드 */
     public void setProduct(Product product){
 

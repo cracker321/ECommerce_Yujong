@@ -29,13 +29,9 @@ public class CommentController {
     private final CommentMapper commentMapper;
 
 
-//====================================================================================================================
 
 
-
-    //[ 댓글 Comment 등록 Create ]
-
-
+    /* 댓글 Comment 등록 Create */
     @PostMapping()
     public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto) {
 
@@ -46,12 +42,9 @@ public class CommentController {
     }
 
 
-//====================================================================================================================
 
 
-    //[ 댓글 Comment 조회 Read ]
-
-
+    /* 댓글 Comment 조회 Read */
     @GetMapping("/{board_Id}")
     public ResponseEntity getComment(@PathVariable("board_Id") @Positive Long boardId,
                                      @Positive @RequestParam int page,
@@ -67,17 +60,16 @@ public class CommentController {
     }
 
 
-//====================================================================================================================
 
 
 
-    //[ 댓글 Comment 수정 Update ]
-
-
+    /* 댓글 Comment 수정 Update */
     @PatchMapping("/{comment_Id}")
     public ResponseEntity patchComment(@PathVariable("comment_Id") @Positive Long commentId,
                                        @Valid @RequestBody CommentPatchDto commentPatchDto) {
+
         commentPatchDto.setCommentId(commentId);
+
         Comment comment = commentService.updateComment(
                 commentMapper.commentPatchDtoToComment(commentPatchDto), commentPatchDto.getMemberId());
 
@@ -86,11 +78,9 @@ public class CommentController {
 
 
 
-//====================================================================================================================
 
 
-    //[ 댓글 Comment 삭제 Delete ]
-
+    /* 댓글 Comment 삭제 Delete */
     @DeleteMapping("/{comment_Id}")
     public ResponseEntity deleteComment(@PathVariable("comment_Id") @Positive Long commentId,
                                         @Positive @RequestParam Long memberId) {
@@ -102,9 +92,6 @@ public class CommentController {
 
         return ResponseEntity.ok(message);
     }
-
-
-//====================================================================================================================
 
 
 

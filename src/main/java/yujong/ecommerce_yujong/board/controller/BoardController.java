@@ -59,8 +59,6 @@ public class BoardController {
     }
 
 
-
-
     /* 게시글 Board 삭제 Delete */
     @DeleteMapping("/{board_id}")
     public ResponseEntity deleteBoard(@PathVariable("board_id") long boardId){
