@@ -34,8 +34,6 @@ public class MemberService implements UserDetailsService {
 
 
 
-//=====================================================================================================================
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email)
@@ -48,13 +46,10 @@ public class MemberService implements UserDetailsService {
 
     }
 
-//=====================================================================================================================
 
 
-    //[ DB에 현재 존재하는 회원 Member 인지 여부를 확인하고,
-    // 존재한다면 그 회원 Member 를 조회 Read 해서 가져와서 반환해주고,
-    // 아니라면, Optional 로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. ]
-
+    /* 회원 Member 조회 Read */
+    /* DB에 존재하는 회원 Member 인지 여부 확인 */
    public Member findVerifiedMember(long memberId){
 
        Member findMember = memberRepository.findById(memberId)
@@ -66,15 +61,9 @@ public class MemberService implements UserDetailsService {
 
 
 
-//=====================================================================================================================
 
 
-
-    //[ 회원 Member 가입 Create ]
-
-    //- Customer: 회원가입도 했고, 물건까지 구매한 고객
-    //- Seller: 회원가입도 했고, 물건을 판매하는 판매자
-
+    /* 회원 Member 가입 Create */
     public Member createMember(Member member) {
 
 
@@ -82,7 +71,7 @@ public class MemberService implements UserDetailsService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
         }
 
-        //회원가입할 때 입력하는 비밀번호를 암호화해서 db에 저장시킴.
+        /* 회원가입할 때 입력하는 비밀번호를 암호화해서 db에 저장 */
         String encodedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encodedPassword);
 
@@ -93,7 +82,8 @@ public class MemberService implements UserDetailsService {
 
 
         } else if (member.getRole() == Role.CUSTOMER) {
-            // 여기에 회원가입하고자 하는 고객 Customer 에 관한 추가 회원 정보를 입력할 수 있음.
+
+            /* 여기에 회원가입하고자 하는 고객 Customer 에 관한 추가 회원 정보를 입력 가능*/
             member.setCustomer(new Customer());
         } else {
             throw new BusinessLogicException(ExceptionCode.ROLE_ERROR);
@@ -109,12 +99,7 @@ public class MemberService implements UserDetailsService {
 
 
 
-//=====================================================================================================================
-
-
-
-    //[ 회원 Member 정보 수정 Update ]
-
+    /* 회원 Member 정보 수정 Update */
     public Member updateMember(long memberId, Member member) {
 
 
@@ -131,10 +116,8 @@ public class MemberService implements UserDetailsService {
 
 
 
-//=====================================================================================================================
 
-
-    //[ 회원 Member 삭제 Delete ]
+    /* 회원 Member 삭제 Delete */
     public void deleteMember(long memberId){
 
        Member member = findVerifiedMember(memberId);

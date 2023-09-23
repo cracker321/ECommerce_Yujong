@@ -25,29 +25,24 @@ public class SellerService {
     private final MemberService memberService;
 
 
-//=============================================================================================================
 
 
-//  [ DB에 현재 존재하는 판매자 Seller 인지 여부를 확인하고, 존재한다면 그 판매자 Seller를 가져와서 반환해주고,
-//    아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.MEMBER_NOT_FOUND 를 발생시켜줌. ]
+
+    /* DB에 존재하는 판매자 Seller 인지 여부 확인 */
+
     public Seller findVerifiedSeller(long sellerId) {
 
         Optional<Seller> optionalSeller = sellerRepository.findById(sellerId);
+
         Seller findSeller = optionalSeller
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-
         return findSeller;
-
-
 
     }
 
 
-//=============================================================================================================
-
-    //[ 판매자 Seller 조회 ]
-    //- 조회해서 가져오기
+    /* 판매자 Seller 조회 Read */
 
     public Seller findSeller(long sellerId) {
 
@@ -57,7 +52,6 @@ public class SellerService {
     }
 
 
-//=============================================================================================================
 
 
     public List<BoardForSellerMyPageDto> getSellerBoard(long sellerId) {
@@ -68,7 +62,6 @@ public class SellerService {
         }
 
         return sellerBoard;
-
 
     }
 }

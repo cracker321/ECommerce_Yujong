@@ -16,12 +16,17 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CustomerService {
+
+
     private final CustomerRepository customerRepository;
     private final MemberService memberService;
 
+
+
     public Customer findVerifiedCustomer(long customerId) {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        Customer findCustomer = optionalCustomer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Customer findCustomer = optionalCustomer
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findCustomer;
     }
 
@@ -30,6 +35,8 @@ public class CustomerService {
         Customer customer = findVerifiedCustomer(customerId);
         return customer;
     }
+
+
 
     public Customer updateCustomer(long customerId, Customer customer) {
         return customerRepository.save(findCustomer(customerId));

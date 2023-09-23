@@ -27,12 +27,14 @@ public class SellerController {
     private final SellerService sellerService;
     private final MemberMapper memberMapper;
 
+
     /* 판매자 마이 페이지 조회 */
     @GetMapping("/{seller_id}")
     public ResponseEntity getSeller(@PathVariable("seller_id") @Positive long sellerId) {
         Member member = sellerService.findSeller(sellerId).getMember();
 
         List<BoardForSellerMyPageDto> boardList = sellerService.getSellerBoard(sellerId);
+
         MemberDto.SellerResponseDto response = memberMapper.memberToSellerDto(member);
 
         return new ResponseEntity<>(

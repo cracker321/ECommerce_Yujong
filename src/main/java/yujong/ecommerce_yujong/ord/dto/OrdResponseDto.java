@@ -11,13 +11,23 @@ import java.time.LocalDate;
 public class OrdResponseDto {
 
     private Long ordId;
+
     private Long customerId;
+
     private Long boardId;
+
     private String name;
+
     private String address;
+
     private String phone;
+
     private int totalPrice;
+
     private int quantity;
+
     private Ord.OrdStatus ordStatus;
+
     private LocalDate createdAt;
+
 }

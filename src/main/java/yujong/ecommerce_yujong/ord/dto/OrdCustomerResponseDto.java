@@ -11,7 +11,7 @@ public class OrdCustomerResponseDto { //구매 내역 조회
 
     private Long ordId;
 
-    private Long clientId;
+    private Long customerId;
 
     private Long boardId;
 

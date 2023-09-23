@@ -45,6 +45,8 @@ public class Ord extends Auditable {
     @JoinColumn(name="product_id")
     private Product product;
 
+
+
     @Column
     @Enumerated(EnumType.STRING)
     private OrdStatus status = OrdStatus.ORD_REQUEST;
