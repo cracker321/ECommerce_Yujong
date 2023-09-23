@@ -18,21 +18,28 @@ import javax.validation.constraints.Positive;
 public class CustomerController {
     private final CustomerService customerService;
     private final MemberService memberService;
-    private final MemberMapper mapper;
+    private final MemberMapper memberMapper;
 
+
+
+
+    /* 소비자 마이 페이지 조회 */
     @GetMapping("/{customer_id}")
     public ResponseEntity getCustomer(@PathVariable("customer_id") @Positive long customerId) {
         Member member = customerService.findCustomer(customerId).getMember();
-        return ResponseEntity.ok(mapper.memberToCustomerDto(member));
+        return ResponseEntity.ok(memberMapper.memberToCustomerDto(member));
     }
 
+
+
+    /* 소비자 정보 수정 */
     @PutMapping("/{customer_id}")
     public ResponseEntity putCustomer(@PathVariable("customer_id") @Positive long customerId,
                                       @RequestBody CustomerPatchDto customerPatchDto) {
-        Customer customer = customerService.updateCustomer(customerId, mapper.customerPatchDtoToCustomer(customerPatchDto));
+        Customer customer = customerService.updateCustomer(customerId, memberMapper.customerPatchDtoToCustomer(customerPatchDto));
         long memberId = customer.getMember().getMemberId();
-        Member member = memberService.updateMember(memberId, mapper.customerPatchDtoToMember(customerPatchDto));
-        return ResponseEntity.ok(mapper.memberToCustomerDto(member));
+        Member member = memberService.updateMember(memberId, memberMapper.customerPatchDtoToMember(customerPatchDto));
+        return ResponseEntity.ok(memberMapper.memberToCustomerDto(member));
     }
 }
 
