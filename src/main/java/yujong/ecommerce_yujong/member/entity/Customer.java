@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yujong.ecommerce_yujong.ord.entity.Ord;
-import yujong.ecommerce_yujong.review.entity.Review;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -111,23 +110,7 @@ public class Customer {
     }
 
 
-//=============================================================================================================
 
-
-
-    //< Customer(1) : Review(N). N:1 양방향 매핑. 주인객체: Review >
-    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
-    private List<Review> reviewList = new ArrayList<>();
-
-
-    //< Customer(1) : Review(N). N:1 양방향 매핑. 연관관계 편의 메소드 >
-    public void addReview(Review review){
-        reviewList.add(review);
-
-        if(review.getCustomer() != this){
-            review.setCustomer(this);
-        }
-    }
 
 //=============================================================================================================
 
@@ -135,6 +118,7 @@ public class Customer {
 
     @Builder
     public Customer(Long customerId){
+
         this.customerId = customerId;
     }
 

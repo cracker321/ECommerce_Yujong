@@ -1,6 +1,7 @@
 package yujong.ecommerce_yujong.member.dto;
 
 import lombok.*;
+import yujong.ecommerce_yujong.member.role.Role;
 
 
 @Data
@@ -25,7 +26,7 @@ public class MemberDto {
         /* 주소는 공백이 아니어야 한다. */
         private String address;
 
-        private String role;
+        private Role role;
     }
 
     @Getter
@@ -33,12 +34,12 @@ public class MemberDto {
     @AllArgsConstructor
     public static class CustomerResponseDto{
         private long memberId;
-        private long custoemrId;
+        private long customerId;
         private String email;
         private String name;
         private String phone;
         private String address;
-        private String role;
+        private Role role;
     }
 
     @Getter
@@ -51,7 +52,7 @@ public class MemberDto {
         private String name;
         private String phone;
         private String address;
-        private String role;
+        private Role role;
         private String introduce;
         private String imageUrl;
     }

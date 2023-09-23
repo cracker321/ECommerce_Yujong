@@ -40,12 +40,8 @@ public class Member {
     @Column
     private String socialId;
 
-    //< 소설 로그인 추가하면서, 해당 판별을 위한 provider 타입 추가 >
-    @Enumerated(EnumType.STRING)
-    private ProviderType providerType;
 
     //# 확인하기!
-    //< Authority로 일일히 확인하기 어려우니 컬럼 추가 >
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -232,12 +228,11 @@ public class Member {
 
 
     //사용자 생성자(Builder와는 별개로 만든 것임)
-    public Member(String name, String email, String password, ProviderType providerType, Role role,
+    public Member(String name, String email, String password, Role role,
                  String socialId){
         this.name = name;
         this.email = email;
         this.password = password;
-        this.providerType = providerType;
         this.role = role;
         this. socialId = socialId;
 

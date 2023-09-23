@@ -3,20 +3,60 @@ package yujong.ecommerce_yujong.member.mapper;
 import org.mapstruct.Mapper;
 import yujong.ecommerce_yujong.member.dto.CustomerPatchDto;
 import yujong.ecommerce_yujong.member.dto.MemberDto;
+import yujong.ecommerce_yujong.member.dto.SellerPatchDto;
+import yujong.ecommerce_yujong.member.entity.Customer;
 import yujong.ecommerce_yujong.member.entity.Member;
+import yujong.ecommerce_yujong.member.entity.Seller;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
+    /* 등록 */
+    Member memberDtoToMember(MemberDto.Post post);
 
+    /* 응답 */
+    default MemberDto.SellerResponseDto memberToSellerDto(Member member) {
+        if (member == null) {
+            return null;
+        }
 
-    MemberDto.Post memberToMemberDto(Member member);
-    Member memberDtoToEntity(MemberDto.Post dto);
+        MemberDto.SellerResponseDto response =
+                MemberDto.SellerResponseDto.builder()
+                        .memberId(member.getMemberId())
+                        .sellerId(member.getSeller().getSellerId())
+                        .email(member.getEmail())
+                        .name(member.getName())
+                        .address(member.getAddress())
+                        .role(member.getRole())
+                        .introduce(member.getSeller().getIntroduction())
+                        .build();
 
-    CustomerPatchDto memberToCustomerPatchDto(Member member);
+        return response;
+    }
 
-//    default CustomerPatchrDto memberToCustomerPatchDto(Member member) {
-//        return new CustomerPatchDto(member.getName(), member.getPhone()); // 예시: 이름과 전화번호를 Dto로 변환
-//    }
+    default MemberDto.CustomerResponseDto memberToCustomerDto(Member member) {
+        if (member == null) {
+            return null;
+        }
+        MemberDto.CustomerResponseDto response =
+                MemberDto.CustomerResponseDto.builder()
+                        .memberId(member.getMemberId())
+                        .customerId(member.getCustomer().getCustomerId())
+                        .email(member.getEmail())
+                        .name(member.getName())
+                        .address(member.getAddress())
+                        .role(member.getRole())
+                        .build();
 
+        return response;
+    }
+
+    /* 수정 */
+    Member sellerPatchDtoToMember(SellerPatchDto sellerPatchDto);
+
+    Member customerPatchDtoToMember(CustomerPatchDto customerPatchDto);
+
+    Seller sellerPatchDtoToSeller(SellerPatchDto sellerPatchDto);
+
+    Customer customerPatchDtoToCustomer(CustomerPatchDto customerPatchDto);
 
 }

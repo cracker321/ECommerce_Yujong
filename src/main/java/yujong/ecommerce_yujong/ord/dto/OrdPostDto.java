@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrdPostDto {
 
-    private Long clientId;
+    private Long customerId;
 
     private Long boardId;
 

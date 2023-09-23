@@ -4,15 +4,21 @@ package yujong.ecommerce_yujong.board.controller;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
+import yujong.ecommerce_yujong.board.dto.BoardTotalResponseDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.board.mapper.BoardMapper;
 import yujong.ecommerce_yujong.board.service.BoardService;
+import yujong.ecommerce_yujong.global.response.MultiResponseDto;
+
+import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -221,7 +227,7 @@ public class BoardController {
     public ResponseEntity patchBoard(@PathVariable("board_id") long boardId,
                                      @RequestBody BoardPatchDto boardPatchDto){
 
-        BoardResponseDto response = boardService.updateBoard(boardId, boardPatchDto);
+        BoardResponseDto response = boardService.updateBoard(boardPatchDto, boardId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
@@ -269,6 +275,17 @@ public class BoardController {
 
     //[ 전체 게시글 Board 조회 Read ]
 
+    @GetMapping()
+    public ResponseEntity GetBoards(@Positive @RequestParam int page,
+                                    @Positive @RequestParam int size) {
+
+        Page<Board> boardsPage = boardService.findBoards(page - 1, size);
+        List<Board> boardList = boardsPage.getContent();
+        List<BoardTotalResponseDto> response = boardService.getBoards(boardList);
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(response, boardsPage), HttpStatus.OK);
+    }
 
 
 

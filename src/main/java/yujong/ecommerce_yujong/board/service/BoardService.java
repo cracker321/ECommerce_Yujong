@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yujong.ecommerce_yujong.board.dto.BoardPatchDto;
 import yujong.ecommerce_yujong.board.dto.BoardPostDto;
 import yujong.ecommerce_yujong.board.dto.BoardResponseDto;
+import yujong.ecommerce_yujong.board.dto.BoardTotalResponseDto;
 import yujong.ecommerce_yujong.board.entity.Board;
 import yujong.ecommerce_yujong.board.mapper.BoardMapper;
 import yujong.ecommerce_yujong.board.repository.BoardRepository;
@@ -20,6 +21,9 @@ import yujong.ecommerce_yujong.product.entity.Product;
 import yujong.ecommerce_yujong.product.repository.ProductRepository;
 import yujong.ecommerce_yujong.product.service.ProductService;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -88,7 +92,7 @@ public class BoardService { //완료!!
 
     //[ 게시글 Board 수정 Update ]
 
-    public BoardResponseDto updateBoard(BoardPatchDto boardPatchDto) {
+    public BoardResponseDto updateBoard(BoardPatchDto boardPatchDto, long boardId) {
 
 
         //순서1)
@@ -122,22 +126,22 @@ public class BoardService { //완료!!
         //     그 변수를 '->' 를 통해 뒤이어 이어진 람다식 안의 action 로직에서 사용하는 과정이 되는 것임.
         //     만약, Optional.ofNullable(인수)의 '인수'가 DB에 존재하지 않아 null을 반환하는 경우,
         //     당연히 뒤이어 이어지는 ifPresent 메소드에서는 아무런 동작도 이어지지 않음.
-        productService.updateProduct(findBoard, boardPatchDto){
 
-            Optional.ofNullable(boardPatchDto.getContent())
+
+        Optional.ofNullable(boardPatchDto.getContent())
                     .ifPresent(content -> findBoard.setContent(content));
 
-            //순서1) 'Optional.ofNullable(boardPatchDto.getContent())'
-            //      : 클라이언트로부터 받아온 Json 객체 데이터 boardPatchDto 의 getContent() 데이터 값이 DB에 있는 경우,
-            //        DB로부터 그 boardPatchDto.getContent() 의 값을 조회해서 가져와서 Optional 객체로 그 값을 감싸서 반환함.
+        //순서1) 'Optional.ofNullable(boardPatchDto.getContent())'
+        //      : 클라이언트로부터 받아온 Json 객체 데이터 boardPatchDto 의 getContent() 데이터 값이 DB에 있는 경우,
+        //        DB로부터 그 boardPatchDto.getContent() 의 값을 조회해서 가져와서 Optional 객체로 그 값을 감싸서 반환함.
 
-            //순서2) '.ifPresent(content -> findProduct.setContent(content))'
-            //      : 그 DB로부터 가져온 boardPatchDto.getContent() 필드의 값을 매개변수 인수로 받아들여서
-            //        그것을 '사용자 임의로 정한 변수명 content'에 담고,
-            //        그 변수명을 뒤이어 이어진 람다식 내부에서 사용하여 DB로부터 조회해 온 수정시키고 싶은 상품 Product 의
-            //        새로운 가격으로 넣어주는 것임.
+        //순서2) '.ifPresent(content -> findProduct.setContent(content))'
+        //      : 그 DB로부터 가져온 boardPatchDto.getContent() 필드의 값을 매개변수 인수로 받아들여서
+        //        그것을 '사용자 임의로 정한 변수명 content'에 담고,
+        //        그 변수명을 뒤이어 이어진 람다식 내부에서 사용하여 DB로부터 조회해 온 수정시키고 싶은 상품 Product 의
+        //        새로운 가격으로 넣어주는 것임.
 
-            Optional.ofNullable(boardPatchDto.getTitle())
+        Optional.ofNullable(boardPatchDto.getTitle())
                     .ifPresent(title -> findBoard.setTitle(title));
 
             
@@ -153,7 +157,6 @@ public class BoardService { //완료!!
 
         }
 
-    }
 
 
 
@@ -163,10 +166,29 @@ public class BoardService { //완료!!
 
     //[ 단일 게시글 Board 조회 Read ]
 
+    public BoardResponseDto getBoard(long boardId) {
+
+        //게시판 존재 여부 화인
+        Board findBoard = findVerifiedBoard(boardId);
+
+        //판매자 존재 여부 확인
+        Seller findSeller = sellerService.findVerifiedSeller(findBoard.getSeller().getSellerId());
+
+        //상품 존재 여부 확인
+        Product findProduct = productService.findVerifiedProduct(findBoard.getProduct());
+
+        BoardResponseDto responseDto = boardMapper.productToBoardResponseDto(findProduct , findBoard);
+
+        return  responseDto;
+    }
+
+
+
+
+
 
     //[ DB에 현재 존재하는 게시글 Board 인지 여부를 확인하고, 존재한다면 그 게시글 Board 를 DB로부터 가져와서 반환해주고,
     //  아니라면, Optional로 처리해서 내가 지정한 사용자 정의 에러 ExceptionCode.BOARD_NOT_FOUND 를 발생시켜줌. ]
-
 
 
     public Board findVerifiedBoard(long boardId){
@@ -182,6 +204,30 @@ public class BoardService { //완료!!
 
 
         return findBoard;
+    }
+
+
+
+
+
+//=============================================================================================================
+
+
+
+    //[ 전체 게시글 Board 조회 Read ]
+
+
+    public List<BoardTotalResponseDto> getBoards(List<Board> boardList) {
+        List<BoardTotalResponseDto> totalBoard = new ArrayList<>();
+
+        Iterator iter = boardList.iterator();
+
+        while (iter.hasNext()) {
+            Board board = (Board) iter.next();
+            Product product = board.getProduct();
+            totalBoard.add(boardMapper.productToBoardTotalResponseDto(product, board));
+        }
+        return totalBoard;
     }
 
 
