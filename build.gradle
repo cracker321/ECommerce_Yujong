@@ -42,20 +42,9 @@ dependencies {
     /* DB */
     implementation 'mysql:mysql-connector-java'
 
-    /* Test + Rest Docs */
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     /* security */
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
-
-    /* OAuth2*/
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-    /* AOP */
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-
 
 
 }
