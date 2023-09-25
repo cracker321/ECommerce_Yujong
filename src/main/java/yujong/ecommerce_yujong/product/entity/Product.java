@@ -40,14 +40,6 @@ public class Product {
     @Column(nullable=false)
     private int leftStock;
 
-    @Column(nullable=false)
-    private int category;
-
-    //확인하기!
-    @Column
-    private String mainImage;
-
-
 
     /* Board(1) - Product(1). 1대1 양방향 매핑. 주인객체: Board. 게시판 - 상품 일대일 연관 관계 : 상품 참조*/
     @OneToOne(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -55,7 +47,7 @@ public class Product {
 
 
 
-    //< Board(1) - Product(1). 1대1 양방향 매핑. 주인객체: Board. 게시판 - 상품 연관관계 편의 메서드 */ >
+    /* Board(1) - Product(1). 1대1 양방향 매핑. 주인객체: Board. 게시판 - 상품 연관관계 편의 메서드 */
     public void setProduct(Board board){
 
         // Step 1)
