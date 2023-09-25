@@ -29,9 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 /* 회원 관련 접근 제한 */
                 .antMatchers(HttpMethod.POST, "/members/signup").permitAll() /* 자체 회원가입 */
-                .antMatchers(HttpMethod.POST, "/login").permitAll() /* 자체 로그인 */
-                .antMatchers(HttpMethod.GET, "/login/**").permitAll() /* 소셜 로그인을 위해 */
-                .antMatchers(HttpMethod.POST, "/login/**").permitAll() /* 소셜 로그인을 위해 */
                 .antMatchers(HttpMethod.GET, "/members/customer/**").hasRole("CUSTOMER") /* 소비자 정보 조회 */
                 .antMatchers(HttpMethod.PUT, "/members/customer/**").hasRole("CUSTOMER") /* 소비자 정보 수정 */
                 .antMatchers(HttpMethod.GET,"/members/seller/**").permitAll() /* 생산자 정보 조회 -> 모두가 조회 가능 */
@@ -62,10 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 /* 혹시 모르는 options 발생 시 허용 */
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-
-                .anyRequest().authenticated()  // 나머지 요청은 모두 인증된 사용자만 접근 가능
+                /* 나머지 요청은 모두 인증된 사용자만 접근 가능 */
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()  // 로그인 설정
+                /* 로그인 설정 */
+                .formLogin()
+                /*
                 .loginProcessingUrl("/members/login")  // 로그인 처리 URL
                 .usernameParameter("email")  // 로그인 폼의 이메일 파라미터명
                 .passwordParameter("password")  // 로그인 폼의 패스워드 파라미터명
