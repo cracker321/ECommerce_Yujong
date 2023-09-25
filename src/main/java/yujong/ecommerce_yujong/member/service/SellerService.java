@@ -22,14 +22,12 @@ public class SellerService {
 
     private final SellerRepository sellerRepository;
     private final BoardRepository boardRepository;
-    private final MemberService memberService;
 
 
 
 
 
     /* DB에 존재하는 판매자 Seller 인지 여부 확인 */
-
     public Seller findVerifiedSeller(long sellerId) {
 
         Optional<Seller> optionalSeller = sellerRepository.findById(sellerId);
@@ -43,7 +41,6 @@ public class SellerService {
 
 
     /* 판매자 Seller 조회 Read */
-
     public Seller findSeller(long sellerId) {
 
         Seller seller = findVerifiedSeller(sellerId);

@@ -49,18 +49,14 @@ public class Product {
 
 
 
-
-
-    //< Board(1) - Product(1) 일대일 양방향 매핑. 주인객체: Board >
+    /* Board(1) - Product(1). 1대1 양방향 매핑. 주인객체: Board. 게시판 - 상품 일대일 연관 관계 : 상품 참조*/
     @OneToOne(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private Board board;
 
 
 
-    //< Board - Product 연관관계 편의 메소드 > //교재 p190~
+    //< Board(1) - Product(1). 1대1 양방향 매핑. 주인객체: Board. 게시판 - 상품 연관관계 편의 메서드 */ >
     public void setProduct(Board board){
-
-
 
         // Step 1)
         if(this.board != null){
@@ -86,10 +82,12 @@ public class Product {
 
 
 
-
     /* Order(N) : Product(1). N:1 양방향 연관관계. 주인객체: Ord 객체. 주문 - 상품 일대일 연관 관계 : 상품 참조 */
     @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
     private List<Ord> ordList = new ArrayList<>();
+
+
+
 
 
     public enum ProductStatus{
@@ -99,8 +97,6 @@ public class Product {
         private String value;
         private String code;
 
-
-        //*****중요*****
         ProductStatus(String value,String code){
             this.value = value;
             this.code = code;
@@ -113,8 +109,6 @@ public class Product {
         public String getCode(){
             return code;
         }
-
-
 
     }
 
