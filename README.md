@@ -13,7 +13,7 @@ No middlemen, so you get the best prices!
 Plus, it’s easy to navigate.
 
 <br>
-소비자와 판매자를 직접 연결해주는 이커머스샵을 위한 API를 구축하였습니다!
+소비자와 판매자를 직접 연결해주는 이커머스샵을 위한 백엔드 API를 구축하였습니다!
 
 
 </br>
