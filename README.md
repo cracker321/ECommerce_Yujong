@@ -12,9 +12,11 @@
 
 ## 📌 Project Timeline
 
-Planning and Designing: 09.02.2023 - 09.05.2023
+### Planning and Designing: 09.02.2023 - 09.05.2023
+
 <br>
-Project period: 09.06.2023 - 09.26.2023
+
+### Project period: 09.06.2023 - 09.26.2023
 
 </br>
 
