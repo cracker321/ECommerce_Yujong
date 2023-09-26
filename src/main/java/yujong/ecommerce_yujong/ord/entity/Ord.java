@@ -22,9 +22,6 @@ public class Ord extends Auditable {
     @Column(length=50, nullable=false)
     private String address;
 
-    @Column(length=13, nullable=false)
-    private String phone;
-
     @Column
     private int quantity;
 

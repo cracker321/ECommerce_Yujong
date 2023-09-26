@@ -20,7 +20,6 @@ public interface OrdMapper {
         ord.setCustomer(client);
         ord.setProduct(product);
         ord.setAddress(ordPostDto.getAddress());
-        ord.setPhone(ordPostDto.getPhone());
         ord.setTotalPrice(ordPostDto.getTotalPrice());
         ord.setQuantity(ordPostDto.getQuantity());
 
@@ -38,7 +37,6 @@ public interface OrdMapper {
         ordResponseDto.setBoardId(ord.getProduct().getBoard().getBoardId());
         ordResponseDto.setName(ord.getCustomer().getMember().getName());
         ordResponseDto.setAddress(ord.getAddress());
-        ordResponseDto.setPhone(ord.getPhone());
         ordResponseDto.setTotalPrice(ord.getTotalPrice());
         ordResponseDto.setQuantity(ord.getQuantity());
         ordResponseDto.setOrdStatus(ord.getStatus());
@@ -58,7 +56,6 @@ public interface OrdMapper {
         ordResponseDto.setTitle(ord.getProduct().getBoard().getTitle());
         ordResponseDto.setName(ord.getCustomer().getMember().getName());
         ordResponseDto.setAddress(ord.getAddress());
-        ordResponseDto.setPhone(ord.getPhone());
         ordResponseDto.setQuantity(ord.getQuantity());
 
         return ordResponseDto;
