@@ -38,12 +38,6 @@ Plus, it’s easy to navigate.
 
 <br>
 
-## 📌 API Specification
-
-</br>
-
-<br>
-
 ## 📌 ERD
 
 ERD link: <a href =  "https://dbdiagram.io/d/65115beeffbf5169f06f100c" target="_blank">ERD link </a>
