@@ -49,9 +49,9 @@ public class CommentService {
 
         //댓글 Comment 를 작성하려고 하는 회원 Member 가 현재 DB에 존재하는 회원 Member 인지 여부 확인
         comment.setMember(memberService.findVerifiedMember(memberId));
-        verifiedMember(comment); // 클라이언트의 댓글 Comment 작성 요청에 있는 회원 Member가 DB에 존재하는 회원인지 여부만 확인.
+        verifiedMember(comment);
         comment.setBoard(boardService.findVerifiedBoard(comment.getBoard().getBoardId()));
-        verifiedBoard(comment); // 클라이언트의 댓글 Comment 작성 요청에 있는 게시글 Board가 실제 DB에 존재하는 게시글인지 여부만 확인.
+        verifiedBoard(comment);
 
         return commentRepository.save(comment);
 
@@ -59,7 +59,6 @@ public class CommentService {
 
 
     /* 문의댓글 Comment를 남긴 사람이 DB에 존재하는 회원 Member인지 여부 확인 */
-
     private void verifiedMember(Comment comment){
 
         commentRepository.findById(comment.getMember().getMemberId());
@@ -74,8 +73,6 @@ public class CommentService {
     private void verifiedBoard(Comment comment){
 
         commentRepository.findById(comment.getBoard().getBoardId());
-        //반환값: DB에 클라이언트로부터 넘어온 해당 댓글 Comment가 달려 있는 게시글 Board가 없으면 null,
-        //       있으면 Optional 객체로 감싸진 해당 게시글 Board 객체가 반환됨
     }
 
 
@@ -93,8 +90,6 @@ public class CommentService {
 
 
         Optional.ofNullable(comment.getContext()).ifPresent(context -> foundComment.setContext(context));
-        //클라이언트로부터 매개변수 인자로 넘어온 댓글 Comment 수정 내용 Context 을 이제
-        //DB에 있던 기존 Comment에 반영해서 댓글 내용을 수정함.
 
 
         return commentRepository.save(comment);
@@ -123,18 +118,11 @@ public class CommentService {
         Long originalCommenterId = foundComment.getMember().getMemberId();
 
         verifyWriter(originalCommenterId, memberId);
-        //삭제 대상이 되는 Comment 객체의 원 작성자 originalCommenterId 와
-        //클라이언트로부터 매개변수 인자로 넘어온, 현재 DB에 존재하며 클라이언트가 삭제시키고 싶어하는 회원 아이디 memberId 가
-        //일치하는 여부를 확인.
-
 
         commentRepository.delete(foundComment);
 
 
     }
-
-
-//====================================================================================================================
 
 
 
@@ -151,7 +139,5 @@ public class CommentService {
     public Page<Comment> findCommentByBoard(Long boardId, int page, int size) {
         return commentRepository.findByBoard_BoardId(boardId, PageRequest.of(page, size, Sort.by("commentId").descending()));
     }
-
-
 
 }

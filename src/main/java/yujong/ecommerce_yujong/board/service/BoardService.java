@@ -42,7 +42,6 @@ public class BoardService {
 
 
     /* 게시글 Board 등록 Create */
-
     public BoardResponseDto createBoard(BoardPostDto boardPostDto) {
 
 
@@ -70,7 +69,6 @@ public class BoardService {
 
 
     /* 게시글 Board 수정 Update */
-
     public BoardResponseDto updateBoard(BoardPatchDto boardPatchDto, long boardId) {
 
 
@@ -96,9 +94,6 @@ public class BoardService {
 
 
 
-//=============================================================================================================
-
-
     /* 단일 게시글 Board 조회 Read */
 
     public BoardResponseDto getBoard(long boardId) {
@@ -116,6 +111,7 @@ public class BoardService {
 
         return  responseDto;
     }
+
 
 
 
@@ -151,8 +147,6 @@ public class BoardService {
 
 
     /* 게시글 Board 삭제 Delete */
-
-
     public void deleteBoard(long boardId){
 
 
@@ -173,8 +167,6 @@ public class BoardService {
     public Page<Board> findBoards(int page, int size) {
         return boardRepository.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()));
     }
-
-
 
 }
 
