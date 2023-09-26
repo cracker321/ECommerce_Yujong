@@ -2,6 +2,8 @@
 
 ## 📌 Tech Stacks
 
+![TechStack](https://github.com/cracker321/ECommerce_Yujong/assets/98802354/6fc2e5c8-e74a-4048-aade-f8e6e4384475)
+
 ## 📌 API Specification
 
 ## 📌 ERD
