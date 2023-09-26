@@ -4,10 +4,12 @@
 
 ## 📌 Introduction
 
-### Direct-to-Consumer E-commerce Mall
+### Direct-to-Consumer E-commerce Shop
 
 I’ve built an e-commerce shop that connects consumers to sellers directly! 
+<br>
 No middlemen, so you get the best prices! 
+<br>
 Plus, it’s easy to navigate.
 
 </br>
