@@ -10,6 +10,15 @@
 
 <br>
 
+## 📌 Project Timeline
+
+Planning and Designing: 09.02.2023 - 09.05.2023
+Project period: 09.06.2023 - 09.26.2023
+
+</br>
+
+<br>
+
 ## 📌 Tech Stacks
 
 ![TechStack](https://github.com/cracker321/ECommerce_Yujong/assets/98802354/6fc2e5c8-e74a-4048-aade-f8e6e4384475)
