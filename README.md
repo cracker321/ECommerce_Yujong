@@ -6,11 +6,15 @@
 
 ### Direct-to-Consumer E-commerce Shop
 
-I’ve built an e-commerce shop that connects consumers to sellers directly! 
+I’ve built back-end APIs for an e-commerce shop that connects consumers to sellers directly! 
 <br>
 No middlemen, so you get the best prices! 
 <br>
 Plus, it’s easy to navigate.
+
+<br>
+소비자와 판매자를 직접 연결해주는 이커머스샵을 위한 API를 구축하였습니다!
+
 
 </br>
 
