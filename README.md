@@ -4,7 +4,11 @@
 
 ## 📌 Introduction
 
-### Direct-to-Consumer Online Mall
+### Direct-to-Consumer E-commerce Mall
+
+I’ve built an e-commerce shop that connects consumers to sellers directly! 
+No middlemen, so you get the best prices! 
+Plus, it’s easy to navigate.
 
 </br>
 
@@ -22,7 +26,7 @@
 
 ## 📌 Tech Stacks
 
-![TechStack](https://github.com/cracker321/ECommerce_Yujong/assets/98802354/6fc2e5c8-e74a-4048-aade-f8e6e4384475)
+![TechStack](https://github.com/cracker321/ECommerce_Yujong/assets/98802354/1e23942a-f15a-4b68-a452-c59543414842)
 
 </br>
 
