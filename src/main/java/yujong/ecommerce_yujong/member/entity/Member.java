@@ -118,8 +118,7 @@ public class Member {
 
 
     //* 사용자 생성자(Builder와는 별개) */
-    public Member(String name, String email, String password, Role role,
-                 String socialId){
+    public Member(String name, String email, String password, Role role){
         this.name = name;
         this.email = email;
         this.password = password;

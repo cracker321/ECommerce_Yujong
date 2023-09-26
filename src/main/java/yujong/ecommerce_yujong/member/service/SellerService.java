@@ -50,7 +50,6 @@ public class SellerService {
 
 
 
-
     public List<BoardForSellerMyPageDto> getSellerBoard(long sellerId) {
         List<BoardForSellerMyPageDto> sellerBoard = boardRepository.sellerBoard(sellerId);
 
