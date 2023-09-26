@@ -32,7 +32,7 @@ Plus, it’s easy to navigate.
 
 ## 📌 Tech Stacks
 
-![TechStack](https://github.com/cracker321/ECommerce_Yujong/assets/98802354/1e23942a-f15a-4b68-a452-c59543414842)
+![TechStacks](https://github.com/cracker321/ECommerce_Yujong/assets/98802354/22c1789f-2c58-4241-a063-e7fe88aa64bc)
 
 </br>
 
